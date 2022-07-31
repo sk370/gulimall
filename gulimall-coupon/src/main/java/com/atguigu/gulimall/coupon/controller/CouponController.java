@@ -5,6 +5,8 @@ import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.coupon.entity.CouponEntity;
 import com.atguigu.gulimall.coupon.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -19,12 +21,32 @@ import java.util.Map;
  * @email icerivericeriver@hotmail.com
  * @date 2022-07-30 10:40:49
  */
+@RefreshScope
 @RestController
 @RequestMapping("coupon/coupon")
 public class CouponController {
     @Autowired
     private CouponService couponService;
+    @Value("${coupon.user.name}")
+    private String name;
+    @Value("${coupon.user.age}")
+    private String age;
+    @RequestMapping("/test")
+    public R test(){
+        return R.ok().put("name", name).put("age", age);
+    }
 
+    /**
+     * 2. 测试注册中心的服务相互调用：返回指定会员的优惠券
+     * @return
+     */
+    @RequestMapping("/member/list")
+    public R membercoupons(){
+        //创建测试优惠券
+        CouponEntity couponEntity = new CouponEntity();
+        couponEntity.setCouponName("满100送100");
+        return R.ok().put("coupons", Arrays.asList(couponEntity));
+    }
     /**
      * 列表
      */

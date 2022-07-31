@@ -3,6 +3,7 @@ package com.atguigu.gulimall.member.controller;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.member.entity.MemberEntity;
+import com.atguigu.gulimall.member.feign.CouponFeignService;
 import com.atguigu.gulimall.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    @Autowired
+    CouponFeignService couponFeignService;
 
     /**
      * 列表
@@ -31,10 +34,20 @@ public class MemberController {
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = memberService.queryPage(params);
-
         return R.ok().put("page", page);
     }
-
+    /**
+     * 1. 测试注册中心的服务相互调用：返回指定会员的优惠券
+     * @return
+     */
+    @RequestMapping("/coupons")
+    public R test(){
+        //创建测试优惠券
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setNickname("张三");
+        R membercoupons = couponFeignService.membercoupons();
+        return R.ok().put("coupons", memberEntity).put("coupons:",membercoupons.get("coupons"));
+    }
 
     /**
      * 信息
