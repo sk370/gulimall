@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,24 +27,23 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * $$ 查出所有分类以及子分类，并以树形结构组装起来
      */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = categoryService.queryPage(params);
-
-        return R.ok().put("page", page);
+    @RequestMapping("/list/tree")
+    public R list(){
+        List<CategoryEntity> entites = categoryService.listWithTree();
+        return R.ok().put("data", entites);
     }
 
-
     /**
+     * $$
      * 信息
      */
     @RequestMapping("/info/{catId}")
     public R info(@PathVariable("catId") Long catId){
 		CategoryEntity category = categoryService.getById(catId);
 
-        return R.ok().put("category", category);
+        return R.ok().put("data", category);//根据前端的数据，将属性名category修改为data
     }
 
     /**
@@ -61,17 +61,32 @@ public class CategoryController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category){
-		categoryService.updateById(category);
+		categoryService.updateCascade(category);//更新`pms_category`以及`pms_category_brand_relation`表
 
         return R.ok();
     }
 
     /**
+     * $$ 修改拖动排序
+     * @param category
+     * @return
+     */
+    @RequestMapping("/update/sort")
+    public R updateSort(@RequestBody CategoryEntity[] category){
+        categoryService.updateBatchById(Arrays.asList(category));
+
+        return R.ok();
+    }
+
+    /**
+     * $$
      * 删除
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds){
-		categoryService.removeByIds(Arrays.asList(catIds));
+        // 1. 检查当前删除的菜单，是否被别的地方引用
+//        categoryService.removeByIds(Arrays.asList(catIds));//生成的，不使用
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
 
         return R.ok();
     }
