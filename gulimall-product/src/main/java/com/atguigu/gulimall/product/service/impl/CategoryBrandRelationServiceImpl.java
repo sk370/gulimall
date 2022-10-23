@@ -49,6 +49,11 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         this.save(categoryBrandRelation);//categoryBrandRelationDao.save(categoryBrandRelation);
     }
 
+    /**
+     * 更新`pms_category_brand_relation`表
+     * @param brandId
+     * @param name
+     */
     @Override
     public void updateBrand(Long brandId, String name) {
         CategoryBrandRelationEntity categoryBrandRelationEntity = new CategoryBrandRelationEntity();

@@ -29,22 +29,23 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params, Long catelogId) {
+        // 按照三级分类查询
+        String key = (String) params.get("key");//前端传过来的关键词
+        // select * from pms_attr_group where catelog_id = ? and (attr_group_id = key or attr_group_name = key or descript = key);
+        QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>();
+        if(!StringUtils.isEmpty(key)){
+            wrapper.and((obj) -> {
+                obj.eq("attr_group_id", key).or().like("attr_group_name", key);
+            });
+        }
         if(catelogId == 0){
             IPage<AttrGroupEntity> page = this.page(
                     new Query<AttrGroupEntity>().getPage(params),
-                    new QueryWrapper<AttrGroupEntity>()
+                    wrapper
             );
             return new PageUtils(page);
         }else {
-            // 按照三级分类查询
-            String key = (String) params.get("key");//前端传过来的关键词
-            // select * from pms_attr_group where catelog_id = ? and (attr_group_id = key or attr_group_name = key or descript = key);
-            QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId);
-            if(!StringUtils.isEmpty(key)){
-                wrapper.and((obj) -> {
-                    obj.eq("attr_group_id", key).or().like("attr_group_name", key);
-                });
-            }
+            wrapper.eq("catelog_id", catelogId);
             IPage<AttrGroupEntity> page = this.page(
                     new Query<AttrGroupEntity>().getPage(params),
                     wrapper
