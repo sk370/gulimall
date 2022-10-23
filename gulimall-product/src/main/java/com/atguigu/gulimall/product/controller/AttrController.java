@@ -37,9 +37,15 @@ public class AttrController {
         return R.ok().put("page", page);
     }
 
-    @GetMapping("/base/list/{catelogId}")
-    public R baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId){
-        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+    /**
+     * 获取规格参数属性，或销售属性。根据数据库[0-销售属性，1-基本属性]
+     * @param params
+     * @param catelogId
+     * @return
+     */
+    @GetMapping("/{attrType}/list/{catelogId}")
+    public R baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId, @PathVariable("attrType") String attrType){
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId,attrType);
 
         return R.ok().put("page", page);
     }
