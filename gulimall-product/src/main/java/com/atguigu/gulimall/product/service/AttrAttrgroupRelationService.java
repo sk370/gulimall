@@ -2,8 +2,10 @@ package com.atguigu.gulimall.product.service;
 
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.atguigu.gulimall.product.vo.AttrGroupRelationVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,11 @@ import java.util.Map;
 public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 自定义批量保存关联关系
+     * @param vos
+     */
+    void saveBath(List<AttrGroupRelationVo> vos);
 }
 
