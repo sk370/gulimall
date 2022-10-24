@@ -2,8 +2,10 @@ package com.atguigu.gulimall.product.service;
 
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.AttrGroupEntity;
+import com.atguigu.gulimall.product.vo.AttrGroupWithAttrsVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,5 +26,12 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
      * @return
      */
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
+
+    /**
+     * 自定义方法
+     * @param catelogId
+     * @return
+     */
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 }
 

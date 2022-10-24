@@ -1,4 +1,12 @@
-#spring:
+spring:
+  cloud:
+    # 报Error creating bean with name 'ossClient'错误导致无法启动，所以加入了这个，但是该模块并没有用到阿里云oss，这是什么原因？
+    alicloud:
+      access-key: LTAI5t65mPsBz6PhbREpcsAk
+      secret-key: hWKPQUYZKm0uwy03Cw2Aizk3aVHlol
+      oss:
+        endpoint: oss-cn-chengdu.aliyuncs.com
+        bucket: gulimall-brands-logo
 #  datasource:
 #    username: root
 #    password: root

@@ -60,7 +60,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         this.save(attrEntity);//保存基本数据
 
         //保存关联关系[当前为销售属性时不需要保存]
-        if(attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()){//1表示规格参数
+        if(attr.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() && attr.getAttrGroupId() != null){//1表示规格参数
             AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
             relationEntity.setAttrGroupId(attr.getAttrGroupId());
             relationEntity.setAttrId(attrEntity.getAttrId());
@@ -96,7 +96,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             // 设置分类和分组名字【attrType=base表示规格参数时才设置分类，否则不设置】
             if(Objects.equals("base", attrType)) {
                 AttrAttrgroupRelationEntity relationEntity = relationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrEntity.getAttrId()));//从关联关系的表中查出
-                if (!StringUtils.isEmpty(relationEntity)) {
+                if (!StringUtils.isEmpty(relationEntity) && relationEntity.getAttrGroupId() != null) {
                     Long attrGroupId = relationEntity.getAttrGroupId();
                     AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrGroupId);
                     attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());

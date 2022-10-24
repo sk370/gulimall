@@ -2,22 +2,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: baidu_route
-          uri: https://www.baidu.com
-          predicates:
-            - Query=whw,baidu
-
-        - id: qq_route
-          uri: https://www.qq.com
-          predicates:
-            - Query=whw,qq
+#        - id: baidu_route
+#          uri: https://www.baidu.com
+#          predicates:
+#            - Query=whw,baidu
+#
+#        - id: qq_route
+#          uri: https://www.qq.com
+#          predicates:
+#            - Query=whw,qq
 
         - id: product_route
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
           filters:
-            - RewritePath=/api/(?<segment>.*),/$\{segment}
+            - RewritePath=/api/(?<segment>.*),/$\{segment} # 将/api/(?<segment>.*) 截取为 /$\{segment}
 
         - id: third_party_route
           uri: lb://gulimall-third-party
@@ -25,6 +25,13 @@ spring:
             - Path=/api/thirdparty/**
           filters:
             - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
+
+        - id: member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
 
         - id: admin_route
           uri: lb://renren-fast
