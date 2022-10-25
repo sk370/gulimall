@@ -27,10 +27,12 @@ public class SkuInfoController {
 
     /**
      * 列表
+     * 增强：根据不同条件查询
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = skuInfoService.queryPage(params);
+//        PageUtils page = skuInfoService.queryPage(params);//原来的简单查询
+        PageUtils page = skuInfoService.queryPageByCondition(params);
 
         return R.ok().put("page", page);
     }

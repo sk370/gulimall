@@ -27,6 +27,7 @@ public class WareSkuController {
 
     /**
      * 列表
+     * 功能增强
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){

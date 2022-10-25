@@ -29,10 +29,13 @@ public class SpuInfoController {
 
     /**
      * 列表
+     * 增强：多条件查询
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuInfoService.queryPage(params);
+//        PageUtils page = spuInfoService.queryPage(params);//原来的简单查询
+        PageUtils page = spuInfoService.queryPageByCondition(params);
+
 
         return R.ok().put("page", page);
     }

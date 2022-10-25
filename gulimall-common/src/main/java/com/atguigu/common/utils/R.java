@@ -62,6 +62,10 @@ public class R extends HashMap<String, Object> {
 		return this;
 	}
 
+	/**
+	 * 自定义方法：判断查询成功
+	 * @return 成功返回0.默认构造方法穿的值
+	 */
 	public Integer getCode() {
 		return (Integer)this.get("code");
 	}

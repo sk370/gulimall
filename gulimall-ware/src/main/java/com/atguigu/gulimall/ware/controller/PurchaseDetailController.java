@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.ware.controller;
 
+import com.atguigu.common.constant.WareConstant;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.ware.entity.PurchaseDetailEntity;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 /**
  * 
- *
+ * 采购需求
  * @author zhuyuqi
  * @email icerivericeriver@hotmail.com
  * @date 2022-07-30 12:12:48
@@ -26,6 +27,7 @@ public class PurchaseDetailController {
     private PurchaseDetailService purchaseDetailService;
 
     /**
+     * 增强功能:
      * 列表
      */
     @RequestMapping("/list")
@@ -51,6 +53,7 @@ public class PurchaseDetailController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
+        purchaseDetail.setStatus(WareConstant.PurchaseStatus.CREATED.getCode());
 		purchaseDetailService.save(purchaseDetail);
 
         return R.ok();
