@@ -79,9 +79,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<BaseAttrs> baseAttrs = vo.getBaseAttrs();
         List<ProductAttrValueEntity> collect = baseAttrs.stream().map(attr -> {
             ProductAttrValueEntity productAttrValueEntity = new ProductAttrValueEntity();
-            BeanUtils.copyProperties(baseAttrs, productAttrValueEntity);
+            productAttrValueEntity.setAttrId(attr.getAttrId());
             AttrEntity attrEntity = attrService.getById(attr.getAttrId());
             productAttrValueEntity.setAttrName(attrEntity.getAttrName());
+            productAttrValueEntity.setAttrValue(attr.getAttrValues());
+            productAttrValueEntity.setQuickShow(attr.getShowDesc());
             productAttrValueEntity.setSpuId(spuInfoEntity.getId());
             return productAttrValueEntity;
         }).collect(Collectors.toList());
@@ -113,7 +115,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 skuInfoEntity.setBrandId(spuInfoEntity.getBrandId());
                 skuInfoEntity.setCatalogId(spuInfoEntity.getCatalogId());
                 skuInfoEntity.setSpuId(spuInfoEntity.getId());
+                skuInfoEntity.setSkuDesc(String.join(",", item.getDescar()));//自己写的，不知道对不对
                 skuInfoEntity.setSaleCount(0L);
+//                skuInfoEntity.setSkuDesc(item.gets);
                 skuInfoEntity.setSkuDefaultImg(defaultImg);
                 skuInfoService.saveSkuInfo(skuInfoEntity);//保存基本信息到pms_sku_info表，此时只保存了默认图片，其他图片还没保存
 
