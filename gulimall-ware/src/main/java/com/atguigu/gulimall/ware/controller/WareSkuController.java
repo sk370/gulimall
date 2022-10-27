@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.ware.controller;
 
+import com.atguigu.common.to.SkuHasStockVo;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +26,18 @@ import java.util.Map;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 查询sku是否有库存
+     */
+    @PostMapping("/hasStock")
+    public R getSkuHasStock(@RequestBody List<Long> skuIds){//feign传过来的参数，json格式，所以要用requestbody
+        List<SkuHasStockVo> vos = wareSkuService.getSkuHasStock(skuIds);
+
+//        return R.ok().put("data", vos);//这样写
+        System.out.println("WareSkuController~~~~~~~" + R.ok().put("data", vos));
+        return R.ok().setData(vos);
+    }
 
     /**
      * 列表

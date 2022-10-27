@@ -48,6 +48,8 @@ public class SpuBoundsController {
 
     /**
      * 保存
+     * @PostMapping("coupon/spubounds/save")
+     * R saveSpuBounds(@RequestBody SpuBoundTo spuBoundTo);
      */
     @PostMapping("/save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){

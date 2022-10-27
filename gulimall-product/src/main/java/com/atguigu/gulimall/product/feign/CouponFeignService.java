@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
- * 调用gulimall-coupon的远程方法
+ * 调用gulimall-coupon的远程方法（优惠）
  * @author zhuyuqi
  * @version v0.0.1
  * @className SpuFeignService

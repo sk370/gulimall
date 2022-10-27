@@ -28,6 +28,19 @@ public class SpuInfoController {
     private SpuInfoService spuInfoService;
 
     /**
+     * 上架商品，并将商品信息保存到ES中
+     * @param spuId
+     * @return
+     */
+    @RequestMapping("/{spuId}/up")
+    public R spuUp(@PathVariable Long spuId){
+        spuInfoService.up(spuId);
+
+        return R.ok();
+    }
+
+
+    /**
      * 列表
      * 增强：多条件查询
      */
@@ -36,10 +49,8 @@ public class SpuInfoController {
 //        PageUtils page = spuInfoService.queryPage(params);//原来的简单查询
         PageUtils page = spuInfoService.queryPageByCondition(params);
 
-
         return R.ok().put("page", page);
     }
-
 
     /**
      * 信息
