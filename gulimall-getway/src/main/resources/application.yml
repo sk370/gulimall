@@ -48,6 +48,12 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 
+        # nginx反向代理过来的请求进行路由处理（必须放置在最后）
+        - id: gulimall_host_router
+          uri: lb://gulimall-product
+          predicates:
+            #- Path=/api/**
+            - Host=**.gulimall.com
 
 
             # 前端项目的请求路径都带/api

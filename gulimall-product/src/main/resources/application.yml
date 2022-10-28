@@ -12,6 +12,9 @@ spring:
     name: gulimall-product
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss # 日期以json返回时，按此格式化
+  thymeleaf:
+    cache: false # 开发时暂时关闭，能够看到实时效果
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
