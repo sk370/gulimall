@@ -35,7 +35,7 @@ public class MyCacheConfig {
         config = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));//指定key的序列化规则——string，这里跟默认设置成了一样
         config = config.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericFastJsonRedisSerializer()));//指定value的序列化规则-json
 
-        cacheProperties.getRedis()
+        final CacheProperties.Redis redisProperties = cacheProperties.getRedis();
         if (redisProperties.getTimeToLive() != null) {
             config = config.entryTtl(redisProperties.getTimeToLive());
         }
