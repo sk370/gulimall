@@ -46,9 +46,9 @@ public class IndexController {
      */
     @ResponseBody
     @GetMapping({"index/json/catalog.json"})
-    public Map<String, List<Catelog2Vo>> getCatalongJson(Model model){
+    public Map<String, List<Catelog2Vo>> getCatalogJson(Model model){
         // 1. 查询所有1级分类
-        Map<String, List<Catelog2Vo>> map = categoryService.getCatalongJson();
+        Map<String, List<Catelog2Vo>> map = categoryService.getCatalogJson();
 
         return map;
     }

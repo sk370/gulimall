@@ -54,6 +54,6 @@ public interface CategoryService extends IService<CategoryEntity> {
      * 查询出一级分类、二级分类和三级分类【用于鼠标hover时显示】
      * @return
      */
-    Map<String, List<Catelog2Vo>> getCatalongJson();
+    Map<String, List<Catelog2Vo>> getCatalogJson();
 }
 

@@ -15,7 +15,7 @@ spring:
         - id: product_route
           uri: lb://gulimall-product
           predicates:
-            - Path=/api/product/**
+            - Path=/api/product/**,/hello #/hello用于压力测试的简单服务测试
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment} # 将/api/(?<segment>.*) 截取为 /$\{segment}
 
