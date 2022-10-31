@@ -1,0 +1,458 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 12,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "13",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : true,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 13,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 白色 6GB 支持 WIFI",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "14",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : true,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 14,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 白色 6GB 支持 蓝牙",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "15",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : true,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 15,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 白色 6GB 支持 NFC",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "16",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 16,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 8999.0,
+          "skuTitle" : "Apple 苹果14promax 白色 4GB 支持 WIFI",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "17",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 17,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 8999.0,
+          "skuTitle" : "Apple 苹果14promax 白色 4GB 支持 蓝牙",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "18",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 18,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 8999.0,
+          "skuTitle" : "Apple 苹果14promax 白色 4GB 支持 NFC",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "19",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 19,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 黑色 6GB 支持 WIFI",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "20",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 20,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 黑色 6GB 支持 蓝牙",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "21",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 21,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 10499.0,
+          "skuTitle" : "Apple 苹果14promax 黑色 6GB 支持 NFC",
+          "spuId" : 7
+        }
+      },
+      {
+        "_index" : "gulimall_product",
+        "_type" : "_doc",
+        "_id" : "22",
+        "_score" : 1.0,
+        "_source" : {
+          "attrs" : [
+            {
+              "attrId" : 1,
+              "attrName" : "入网型号",
+              "attrValue" : "全网通"
+            },
+            {
+              "attrId" : 4,
+              "attrName" : "系统",
+              "attrValue" : "IOS"
+            }
+          ],
+          "brandId" : 11,
+          "brandImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+          "brandName" : "Apple",
+          "catalogId" : 225,
+          "catalogName" : "手机",
+          "hasStock" : false,
+          "hotScore" : 0,
+          "saleCount" : 0,
+          "skuId" : 22,
+          "skuImg" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-27/3f76a616-cb49-4b33-8f4a-fa9154e9288d_f205d9c99a2b4b01.jpg",
+          "skuPrice" : 8999.0,
+          "skuTitle" : "Apple 苹果14promax 黑色 4GB 支持 WIFI",
+          "spuId" : 7
+        }
+      }
+    ]
+  },
+  "aggregations" : {
+    "catalog_agg" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : 225,
+          "doc_count" : 12,
+          "catalog_name_agg" : {
+            "doc_count_error_upper_bound" : 0,
+            "sum_other_doc_count" : 0,
+            "buckets" : [
+              {
+                "key" : "手机",
+                "doc_count" : 12
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "attr_agg" : {
+      "doc_count" : 24,
+      "attr_id_agg" : {
+        "doc_count_error_upper_bound" : 0,
+        "sum_other_doc_count" : 0,
+        "buckets" : [
+          {
+            "key" : 1,
+            "doc_count" : 12,
+            "attr_name_agg" : {
+              "doc_count_error_upper_bound" : 0,
+              "sum_other_doc_count" : 0,
+              "buckets" : [
+                {
+                  "key" : "入网型号",
+                  "doc_count" : 12
+                }
+              ]
+            },
+            "attr_value_agg" : {
+              "doc_count_error_upper_bound" : 0,
+              "sum_other_doc_count" : 0,
+              "buckets" : [
+                {
+                  "key" : "全网通",
+                  "doc_count" : 12
+                }
+              ]
+            }
+          },
+          {
+            "key" : 4,
+            "doc_count" : 12,
+            "attr_name_agg" : {
+              "doc_count_error_upper_bound" : 0,
+              "sum_other_doc_count" : 0,
+              "buckets" : [
+                {
+                  "key" : "系统",
+                  "doc_count" : 12
+                }
+              ]
+            },
+            "attr_value_agg" : {
+              "doc_count_error_upper_bound" : 0,
+              "sum_other_doc_count" : 0,
+              "buckets" : [
+                {
+                  "key" : "IOS",
+                  "doc_count" : 12
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "brand_agg" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : 11,
+          "doc_count" : 12,
+          "brand_img_agg" : {
+            "doc_count_error_upper_bound" : 0,
+            "sum_other_doc_count" : 0,
+            "buckets" : [
+              {
+                "key" : "https://gulimall-brands-logo.oss-cn-chengdu.aliyuncs.com/2022-10-22/f1571b27-15b5-4cef-8780-24866f8e2a94_apple.png",
+                "doc_count" : 12
+              }
+            ]
+          },
+          "brand_name_agg" : {
+            "doc_count_error_upper_bound" : 0,
+            "sum_other_doc_count" : 0,
+            "buckets" : [
+              {
+                "key" : "Apple",
+                "doc_count" : 12
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

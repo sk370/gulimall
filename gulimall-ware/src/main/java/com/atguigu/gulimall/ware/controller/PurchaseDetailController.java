@@ -54,6 +54,8 @@ public class PurchaseDetailController {
     @RequestMapping("/save")
     public R save(@RequestBody PurchaseDetailEntity purchaseDetail){
         purchaseDetail.setStatus(WareConstant.PurchaseStatus.CREATED.getCode());
+        // TODO 从gulimall-product查找价格
+        //purchaseDetail.setSkuPrice();
 		purchaseDetailService.save(purchaseDetail);
 
         return R.ok();

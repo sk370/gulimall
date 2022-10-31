@@ -9,5 +9,6 @@ package com.atguigu.gulimall.search.constant;
  * @date 2022/10/27 10:10
  */
 public class ESConstant {
-    public static final String PRODUCT_INDEX = "product";//sku数据在ES中索引
+    public static final String PRODUCT_INDEX = "gulimall_product";//sku数据在ES中索引
+    public static final Integer PRODUCT_PAGESIZE = 8;//sku数据的每页数据
 }

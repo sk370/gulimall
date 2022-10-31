@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -67,19 +64,24 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             purchaseId = purchaseEntity.getId();
         }
 
-        // 合并采购单
+        // 合并采购单功能
         List<Long> items = mergeVo.getItems();//采购需求id `wms_purchase_detail`表
 
+        //采购单与采购项仓库不同、采购项之间仓库不同可以合并，等到采购结束往仓库存时，去查询`wms_purchase_detail`表。
+        //只是这样的话，`wms_purchase`表中的wareid就多余了
+
         Long finalPurchaseId = purchaseId;//map方法中的箭头函数要求变量必须有值，所以要单独获取一次
-        List<PurchaseDetailEntity> collect = items.stream().filter(i->{// TODO 确认采购单状态是0或1才能合并【老师布置任务，已完成】
-            if(purchaseDetailService.getById(i).getStatus() == WareConstant.DetailStatus.CREATED.getCode() || purchaseDetailService.getById(i).getStatus() == WareConstant.DetailStatus.ASSIGNED.getCode()){
-                return true;
+        List<PurchaseDetailEntity> collect = items.stream().filter(i->{// 【已完成】 确认采购单状态是0或1才能合并【老师布置任务，已完成】
+            if(!(purchaseDetailService.getById(i).getStatus() == WareConstant.DetailStatus.CREATED.getCode() || purchaseDetailService.getById(i).getStatus() == WareConstant.DetailStatus.ASSIGNED.getCode())){
+                System.out.println("订单id【" + i + "】已在采购中，不能合并，将合并其余未在采购中的订单");
+                return false;
             }
-            return false;
+            return true;
         }).map(i -> {
             PurchaseDetailEntity purchaseDetailEntity = new PurchaseDetailEntity();
             purchaseDetailEntity.setId(i);
             purchaseDetailEntity.setPurchaseId(finalPurchaseId);
+            // TODO 未设置仓库
             purchaseDetailEntity.setStatus(WareConstant.PurchaseStatus.ASSIGNED.getCode());
             return purchaseDetailEntity;
         }).collect(Collectors.toList());
@@ -143,10 +145,13 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             }else {
                 detailEntity.setStatus(WareConstant.DetailStatus.FINISH.getCode());//采购成功
                 // 3. 采购成功的商品(项）进行入库 更新`wms_ware_sku`表
-                PurchaseDetailEntity entity = purchaseDetailService.getById(item.getItemId());//当前采购项的详细信息
-                wareSkuService.addStock(entity.getSkuId(), entity.getWareId(), entity.getSkuNum());//将指定商品的指定数量，保存到指定仓库
+                PurchaseDetailEntity entity = purchaseDetailService.getOne(new QueryWrapper<PurchaseDetailEntity>().eq("sku_id",item.getItemId()).eq("purchase_id", purchaseDoneVo.getId()));//当前采购项的详细信息
+
+                wareSkuService.addStock(entity.getSkuId(), entity.getWareId(), entity.getSkuNum());//TODO 将指定商品的指定数量，保存到指定仓库【缺少一项信息，商品名称，需要从gulimall-product中查】
+                detailEntity.setId(entity.getId());
             }
-            detailEntity.setId(item.getItemId());
+            detailEntity.setPurchaseId(purchaseDoneVo.getId());
+            detailEntity.setSkuId(item.getItemId());
             updates.add(detailEntity);
         }
         purchaseDetailService.updateBatchById(updates);//批量更新采购项

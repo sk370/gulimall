@@ -216,10 +216,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         // 1. 组装需要的数据
         // 1.1 查出当前spuid对应的所有sku信息
         List<SkuInfoEntity> skus = skuInfoService.getSkusBySpuId(spuId);
-        // TODO 查询当前sku的所有可以用来被检索的规格属性（由于不同的sku具有相同的规格，所以只需要按照同种spu查询一遍，不需要每个sku都查）
+        // 【已完成】 查询当前sku的所有可以用来被检索的规格属性（由于不同的sku具有相同的规格，所以只需要按照同种spu查询一遍，不需要每个sku都查）
         List<ProductAttrValueEntity> productAttrValueEntities;//获取当前spu对应的所有attr（sku的attr继承自spu）
         productAttrValueEntities = productAttrValueService.baseAttrListForSpu(spuId);
-        // TODO 当前商品没有设置规格参数，即`pms_product_attr_value`表没有spuId属性，查到对象则为空
+        // 【已完成】 当前商品没有设置规格参数，即`pms_product_attr_value`表没有spuId属性，查到对象则为空
         List<Long> attrIds = productAttrValueEntities.stream().map(attr -> {
             return attr.getAttrId();
         }).collect(Collectors.toList());//所有属性的id
@@ -234,7 +234,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return attrs1;
         }).collect(Collectors.toList());
 
-        // TODO 向远程服务查询是否有库存(批量查库存)【已完成】
+        // 【已完成】 向远程服务查询是否有库存(批量查库存)
         List<Long> skuIdList = skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
         Map<Long, Boolean> stockMap = null;
         try{
@@ -261,24 +261,25 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             }else {
                 esModel.setHasStock(finalStockMap.get(sku.getSkuId()));
             }
-            // TODO 热度评分【已完成】
+            // 【已完成】 热度评分
             esModel.setHotScore(0L);
-            // TODO 查询属性信息（品牌的分类和属性、属性值）【已完成】
+            // 【已完成】 查询属性信息（品牌的分类和属性、属性值）
             BrandEntity brand = brandService.getById(sku.getBrandId());
             esModel.setBrandName(brand.getName());
-            esModel.setSkuImg(brand.getLogo());
+            esModel.setCatalogId(sku.getCatalogId());
+            esModel.setBrandImg(brand.getLogo());
             CategoryEntity category = categoryService.getById(sku.getCatalogId());
             esModel.setCatalogName(category.getName());
 
-            esModel.setAttrs(attrsList);//设置检索熟悉
+            esModel.setAttrs(attrsList);//设置检索信息
 
             return esModel;
         }).collect(Collectors.toList());
 
-        // TODO 将所有数据(SkuESModel - collect)发送给ES进行保存-gulimall-search【已完成】
+        // 【已完成】 将所有数据(SkuESModel - collect)发送给ES进行保存-gulimall-search
         R r = searchFeignService.productStatusUp(upProducts);
         if(r.getCode() == 0){//R的构造函数中默认code=0表示成功（没有被修改过）
-            // TODO 修改当前spu的状态【已完成】
+            // 【已完成】 修改当前spu的状态
             this.baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
         }else{
             // TODO 重复调用问题（接口幂等性）重试机制
