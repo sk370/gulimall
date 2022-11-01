@@ -36,5 +36,6 @@ public class SearchParam {
     private List<String> attrs;//按照属性进行筛选，可以多选  attrs=1_3G:4G:5G 表示1号属性，值为3G、4G、5G
     private Integer pageNum = 1;//页码
 
-
+    // 面包屑导航相关数据
+    private String _queryString;//原生的所有查询条件——？后的内容
 }

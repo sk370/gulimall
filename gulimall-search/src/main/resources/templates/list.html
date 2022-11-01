@@ -735,7 +735,7 @@
     </div>
 </div>
 
-<!--手机-->
+<!--面包屑导航-->
 <div class="JD_ipone">
     <div class="JD_ipone_bar">
         <div class="JD_ipone_one a">
@@ -753,17 +753,7 @@
         </div>
         <i><img src="static/search/image/right-@1x.png" alt=""></i>
         <div class="JD_ipone_one c">
-            <a href="#" class="qqq">手机 <img src="static/search/image/down-@1x.png" alt=""></a>
-            <div>
-                <a href="#">手机</a>
-                <a href="#">老人机</a>
-                <a href="#">对讲机</a>
-                <a href="#">女性手机</a>
-                <a href="#">超续航手机</a>
-                <a href="#">全面屏手机</a>
-                <a href="#">拍照手机</a>
-                <a href="#">游戏手机</a>
-            </div>
+            <a th:href="${nav.link}" th:each="nav:${result.navs}" class="qqq"><span th:text="${nav.navName}"></span>:<span th:text="${nav.navValue}"></span> x </a>
         </div>
         <i><img src="static/search/image/right-@1x.png" alt=""></i>
     </div>
@@ -778,9 +768,9 @@
                 <h3><b>手机</b><em>商品筛选</em></h3>
                 <div class="st-ext">共&nbsp;<span>10135</span>个商品</div>
             </div>
-            <div class="JD_nav_logo">
+            <div class="JD_nav_logo" th:with="brandId = ${param.brandId}">
                 <!--品牌-->
-                <div class="JD_nav_wrap">
+                <div th:if="${#strings.isEmpty(brandId)}" class="JD_nav_wrap">
                     <div class="sl_key">
                         <span><b>品牌：</b></span>
                     </div>
@@ -839,7 +829,7 @@
                     </div>
                 </div>
                 <!--属性-->
-                <div class="JD_pre" th:each="attr : ${result.attrs}">
+                <div class="JD_pre" th:each="attr : ${result.attrs}" th:if="${!#lists.contains(result.attrIds,attr.attrId)}">
                     <div class="sl_key">
                         <span th:text="${attr.attrName}">价格：</span>
                     </div>

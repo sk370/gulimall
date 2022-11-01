@@ -3,8 +3,10 @@ package com.atguigu.gulimall.product.controller;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.entity.AttrEntity;
+import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.atguigu.gulimall.product.entity.ProductAttrValueEntity;
 import com.atguigu.gulimall.product.service.AttrService;
+import com.atguigu.gulimall.product.service.BrandService;
 import com.atguigu.gulimall.product.service.ProductAttrValueService;
 import com.atguigu.gulimall.product.vo.AttrRespVo;
 import com.atguigu.gulimall.product.vo.AttrVO;
@@ -31,7 +33,19 @@ public class AttrController {
     private AttrService attrService;
     @Autowired
     private ProductAttrValueService productAttrValueService;
+    @Autowired
+    private BrandService brandService;
 
+    /**
+     * 获取到所有品牌对象
+     * @param brandIds
+     * @return
+     */
+    @GetMapping("/infos")
+    public R info(@RequestParam("brandIds") List<Long> brandIds){
+        List<BrandEntity> brand = brandService.getBrandsById(brandIds);
+        return R.ok().put("brand", brand);
+    }
 
     /**
      * 修改spu规格时，用于数据回显。根据数据库[0-销售属性，1-基本属性]

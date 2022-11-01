@@ -9,6 +9,7 @@ import com.atguigu.gulimall.search.constant.ESConstant;
 import com.atguigu.gulimall.search.feign.ProductFeignService;
 import com.atguigu.gulimall.search.service.MallSearchService;
 import com.atguigu.gulimall.search.vo.AttrResponseVo;
+import com.atguigu.gulimall.search.vo.BrandVo;
 import com.atguigu.gulimall.search.vo.SearchParam;
 import com.atguigu.gulimall.search.vo.SearchResult;
 import org.apache.lucene.search.TotalHits;
@@ -40,6 +41,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -183,32 +186,87 @@ public class MallSearchServiceImpl implements MallSearchService {
             attrVo.setAttrId(key);
             attrVo.setAttrName(attrName);
             attrVo.setAttrValue(collect);
+
             attrs.add(attrVo);
         }
         searchResult.setAttrs(attrs);
 
         // 4. 面包屑导航
-        List<SearchResult.NavVo> collect = param.getAttrs().stream().map(attr -> {
-            SearchResult.NavVo navVo = new SearchResult.NavVo();
-            //attr=1_4寸:5寸&attr=2_16G:18G
-            String[] s = attr.split("_");
-            navVo.setNavValue(s[1]);
-            R info = productFeignService.info(Long.parseLong(s[0]));
-            if(info.getCode() == 0){
-                AttrResponseVo data = info.getData("attr", new TypeReference<AttrResponseVo>() {});
-                String attrName = data.getAttrName();
-                navVo.setNavName(attrName);
-            }else {
-                navVo.setNavName(s[0]);
-            }
-            return navVo;
-        }).collect(Collectors.toList());
+        if(param.getAttrs() != null && param.getAttrs().size() > 0) {
+            List<SearchResult.NavVo> collect = param.getAttrs().stream().map(attr -> {//attr为1_全网通
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                //attrs=1_4寸:5寸&attrs=2_16G:18G
+                String[] s = attr.split("_");//s[0]属性id s[1]属性值
+                navVo.setNavValue(s[1]);
+                R info = productFeignService.info(Long.parseLong(s[0]));//远程查询属性
+                searchResult.getAttrIds().add(Long.parseLong(s[0]));
+                if (info.getCode() == 0) {
+                    AttrResponseVo data = info.getData("attr", new TypeReference<AttrResponseVo>() {
+                    });
+                    String attrName = data.getAttrName();
+                    navVo.setNavName(attrName);
+                } else {
+                    navVo.setNavName(s[0]);
+                }
+                String replace = replaceQueryString(param, attr, "attrs");
+                navVo.setLink("http://search.gulimall.com/list.html?" + replace);
+                return navVo;
+            }).collect(Collectors.toList());
+            searchResult.setNavs(collect);
+        }
 
-        searchResult.setNavs(collect);
+        // 5. 分类及属性的面包屑导航
+        // 5.1 品牌的面包屑导航
+        if(param.getBrandId() != null && param.getBrandId().size() > 0){
+            List<SearchResult.NavVo> navs = searchResult.getNavs();//这里设置了在设定SearchResult.NavVo时，设置了List<NavVo> navs = new ArrayList<>();，主要是防止该处为null
+            SearchResult.NavVo navVo = new SearchResult.NavVo();
+            navVo.setNavName("品牌");
+            R info = productFeignService.info(param.getBrandId());//远程方法调用
+            if(info.getCode() == 0){
+                List<BrandVo> brand = info.getData("brand", new TypeReference<List<BrandVo>>() {});
+                StringBuffer stringBuffer = new StringBuffer();
+                String replace = "";
+                for (BrandVo brandVo : brand) {
+                    stringBuffer.append(brandVo.getName() + ";");
+                    replace = replaceQueryString(param, brandVo.getBrandId() + "", "brandId");
+                }
+                navVo.setNavValue(stringBuffer.toString());
+                navVo.setLink("http://search.gulimall.com/list.html?" + replace);
+            }
+            navs.add(navVo);
+        }
+        // 5.2 TODO 分类的面包屑导航 (不需要导航取消——不需要拼接链接）
+
 
 
 //        System.out.println(searchResult);
         return searchResult;
+    }
+
+    /**
+     * 封装成一个导航链接：即每一个NavVo的link都是一个可点击的链接，且链接不包含当前参数条件。最后按照浏览器的格式对链接进行编码
+     * @param param
+     * @param value
+     * @param key
+     * @return
+     */
+    private String replaceQueryString(SearchParam param, String value, String key) {
+        String encode = null;
+        try {
+            encode = URLEncoder.encode(value, "UTF-8");
+            encode = encode.replace("+", "%20");//如果属性值带空格，会被encode成+；前端空格用%20表示，所以要将+编程空格，即%20替换
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String replace = null;
+        if(param.get_queryString().contains("&" + key + "=" + encode)){//判断当前参数是第一个参数还是第n个参数
+            replace = param.get_queryString().replace("&" + key + "=" + encode, "");
+
+        }else {
+            replace = param.get_queryString().replace(key + "=" + encode, "");
+        }
+
+        return replace;
     }
 
     /**
@@ -242,7 +300,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         }
         // 1.1.2.4 属性查询
         if(param.getAttrs() != null && param.getAttrs().size() > 0){//属性
-            //attr=1_4寸:5寸&attr=2_16G:18G
+            //attrs=1_4寸:5寸&attrs=2_16G:18G
             for (String attrStr : param.getAttrs()) {
                 BoolQueryBuilder nestedBoolQuery = QueryBuilders.boolQuery();
                 String[] s = attrStr.split("_");
@@ -317,7 +375,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         attr_agg.subAggregation(attr_id_agg);
         sourceBuilder.aggregation(attr_agg);
 
-        System.out.println("构建的dsl语句：" + sourceBuilder.toString() + "类型为"+ sourceBuilder.getClass());
+//        System.out.println("构建的dsl语句：" + sourceBuilder.toString() + "类型为"+ sourceBuilder.getClass());
         SearchRequest searchRequest = new SearchRequest(new String[]{ESConstant.PRODUCT_INDEX}, sourceBuilder);//构造检索请求
 
         return searchRequest;

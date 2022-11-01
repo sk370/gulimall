@@ -4,6 +4,7 @@ import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +19,12 @@ public interface BrandService extends IService<BrandEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     void updateDetail(BrandEntity brand);
+
+    /**
+     * 自定义方法
+     * @param brandIds
+     * @return
+     */
+    List<BrandEntity> getBrandsById(List<Long> brandIds);
 }
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 前台页面的控制器方法——页面跳转及处理
  * @author zhuyuqi
@@ -28,7 +30,9 @@ public class SearchController {
      * @return
      */
     @GetMapping("/list.html")
-    public String listPage(SearchParam param, Model model){
+    public String listPage(SearchParam param, Model model, HttpServletRequest request){
+        String queryString = request.getQueryString();//路径？后的一串内容
+        param.set_queryString(queryString);
         // 1. 根据传递过来的页面查询参数，去ES中检索商品
         SearchResult result = mallSearchService.serach(param);
 
