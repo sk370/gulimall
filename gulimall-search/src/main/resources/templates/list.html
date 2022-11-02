@@ -1175,21 +1175,18 @@
                                 <a href="#">关注</a>
                             </div>
                             <p class="da">
-                                <a href="#" title="购买AppleCare+，获得原厂2年整机保修(含电池)，和多达2次意外损坏的保修服务。购买勾选：保障服务、原厂保2年。">
-                                    <img th:src="${product.skuImg}" class="dim">
-                                </a>
+                                <a th:href="|http://item.gulimall.com/${product.skuId}.html|"><img th:src="${product.skuImg}" class="dim"></a>
                             </p>
                             <ul class="tab_im">
-                                <li><a href="#" title="黑色">
-                                    <img th:src="${product.skuImg}"></a></li>
+                                <li>
+                                    <a href="#"><img th:src="${product.skuImg}"></a>
+                                </li>
                             </ul>
                             <p class="tab_R">
-                                <span th:text="'￥' + ${product.skuPrice}">¥5199.00</span>
+                                <span th:text="'￥' + ${product.skuPrice}"></span>
                             </p>
                             <p class="tab_JE">
-                                <a href="#" th:utext="${product.skuTitle}">
-                                    Apple iPhone 7 Plus (A1661) 32G 黑色 移动联通电信4G手机
-                                </a>
+                                <a th:href="|http://item.gulimall.com/${product.skuId}.html|" th:utext="${product.skuTitle}"> </a>
                             </p>
                             <p class="tab_PI">已有<span>11万+</span>热门评价
                                 <a href="#">二手有售</a>

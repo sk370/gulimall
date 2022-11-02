@@ -53,7 +53,7 @@ spring:
           uri: lb://gulimall-product
           predicates:
             #- Path=/api/**
-            - Host=gulimall.com
+            - Host=gulimall.com,item.gulimall.com
 
         - id: gulimall_host_router
           uri: lb://gulimall-search
