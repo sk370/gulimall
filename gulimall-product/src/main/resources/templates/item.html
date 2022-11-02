@@ -1266,23 +1266,23 @@
         // 1. 点击的元素先添加上自定义的属性，
         $(this).addClass("clicked")
         var curr = $(this).attr("skus").split(",")//当前被点击的元素的属性
-        console.log(curr)
+        // console.log(curr)
         $(this).parent().parent().find(".sku_attr_value").removeClass("checked")//改变样式
         var skus = new Array();
         $(".sku_attr_value.checked").each(function (){
             skus.push($(this).attr("skus").split(","))//这个$(this)是当前遍历的元素
         })
-        console.log(skus)
+        // console.log(skus)
 
         // 2. 取出skus和curr的交集，得到skuid
         var filterEle = curr
         for (var i = 0; i < skus.length; i++) {
             filterEle = $(filterEle).filter(skus[i])
         }
-        console.log(filterEle)
-        // 3. 页面跳转
-        location.href="http://item.gulimall.com/"+filterEle[0]+"25.html"
+        // console.log(filterEle)
 
+        // 3. 页面跳转
+        location.href="http://item.gulimall.com/"+filterEle[0]+".html"
     })
     /**
      * 初始化选择的销售属性样式
