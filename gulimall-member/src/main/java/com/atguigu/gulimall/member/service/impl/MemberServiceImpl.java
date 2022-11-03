@@ -1,13 +1,21 @@
 package com.atguigu.gulimall.member.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.atguigu.gulimall.member.dao.MemberLevelDao;
 import com.atguigu.gulimall.member.entity.MemberLevelEntity;
 import com.atguigu.gulimall.member.exception.PhoneExistException;
 import com.atguigu.gulimall.member.exception.UserNameExistException;
+import com.atguigu.gulimall.member.po.WeiboAcctPo;
+import com.atguigu.gulimall.member.vo.UserLoginVo;
 import com.atguigu.gulimall.member.vo.UserRegistVo;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.BasicHttpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +28,17 @@ import com.atguigu.gulimall.member.service.MemberService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 
 @Service("memberService")
 public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> implements MemberService {
     @Autowired
     MemberLevelDao memberLevelDao;
+    @Autowired
+    RestTemplate restTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -67,6 +80,71 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     public void checeUserNameUnique(String username) throws UserNameExistException{
         Integer count = baseMapper.selectCount(new QueryWrapper<MemberEntity>().eq("username", username));
         if(count > 0) throw new UserNameExistException();
+    }
+
+    @Override
+    public MemberEntity login(UserLoginVo vo) {
+        String loginacct = vo.getLoginacct();
+        String password = vo.getPassword();
+        MemberEntity memberEntity = baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("username", loginacct).or().eq("mobile", loginacct));
+        if(memberEntity == null){
+            // 可以采用异常机制，抛出特定异常——同注册
+            return null;
+        } else {
+            String passwordDB = memberEntity.getPassword();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            boolean matches = passwordEncoder.matches(password, passwordDB);
+            if(matches){
+                return memberEntity;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public MemberEntity login(WeiboAcctPo po) {
+        // 具有登录和注册两个功能
+        String uid = po.getUid();
+        MemberEntity memberEntity = baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("social_uid", uid));
+        if(memberEntity != null){
+            // 当前用户已经注册，可以直接登录。
+            MemberEntity entity = new MemberEntity();
+            entity.setId(memberEntity.getId());
+            entity.setAccessToken(po.getAccess_token());
+            entity.setExpiresIn(po.getExpires_in());
+            baseMapper.updateById(entity);
+            memberEntity.setAccessToken(entity.getAccessToken());
+            memberEntity.setExpiresIn(entity.getExpiresIn());
+            return memberEntity;
+        } else {//注册用户
+            MemberEntity entity = new MemberEntity();
+            MemberLevelEntity memberLevelEntity = memberLevelDao.getDefaultLevel();//获取默认会员等级
+            entity.setLevelId(memberLevelEntity.getId());
+            entity.setCreateTime(new Date());
+            entity.setAccessToken(po.getAccess_token());
+            entity.setExpiresIn(po.getExpires_in());
+            entity.setSocialUid(po.getUid());
+            entity.setStatus(1);
+            try {//远程请求失败，不影响正常登录
+                // 获取社交账号的详细信息
+                Map<String, String> map = new HashMap<>();
+                map.put("access_token", po.getAccess_token());
+                map.put("uid", po.getUid());
+                String result = restTemplate.getForObject("https://api.weibo.com/2/users/show.json", String.class, map);
+                System.out.println(result + "~~~~~~~~~~~~~~~~~~~~~~");
+//            if(result != null){// 判断返回结果
+                JSONObject parseObject = JSON.parseObject(result);
+                String gender = parseObject.getString("gender");
+                String nickName = parseObject.getString("nickName");
+//            }
+                entity.setNickname(nickName);
+                entity.setGender(Objects.equals("m",gender)?1:0);
+            } catch (RestClientException e) {
+                e.printStackTrace();
+            }
+            baseMapper.insert(entity);
+            return entity;
+        }
     }
 
 }

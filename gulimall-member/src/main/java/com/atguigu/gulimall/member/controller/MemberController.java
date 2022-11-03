@@ -6,6 +6,8 @@ import java.util.Map;
 import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.gulimall.member.exception.PhoneExistException;
 import com.atguigu.gulimall.member.exception.UserNameExistException;
+import com.atguigu.gulimall.member.po.WeiboAcctPo;
+import com.atguigu.gulimall.member.vo.UserLoginVo;
 import com.atguigu.gulimall.member.vo.UserRegistVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,37 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     CouponFeignService couponFeignService;
+
+
+    /**
+     * 用户第三方账号登录
+     * @param po
+     * @return
+     */
+    @PostMapping("oauth2/login")
+    public R oauthLogin(@RequestBody WeiboAcctPo po){
+        MemberEntity entity = memberService.login(po);
+        if(entity!=null){
+            return R.ok();
+        }else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getCode(), BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getMsg());
+        }
+    }
+
+    /**
+     * 用户登录
+     * @param vo
+     * @return
+     */
+    @PostMapping("/login")
+    public R login(@RequestBody UserLoginVo vo){
+        MemberEntity entity = memberService.login(vo);
+        if(entity!=null){
+            return R.ok();
+        }else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getCode(), BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getMsg());
+        }
+    }
 
     /**
      * 用户注册

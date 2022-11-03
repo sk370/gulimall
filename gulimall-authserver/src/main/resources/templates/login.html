@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="static/login/JD_sass/JD1.css"/>
@@ -57,7 +57,8 @@
                 <div></div>
                 请输入账户名和密码
             </div>
-            <form action="">
+            <form action="/login" method="post">
+                <div style="color: red;" th:text="${errors != null ? (#maps.containsKey(errors,'msg') ? errors.msg : '') : ''}"></div>
                 <ul>
                     <li class="top_1">
                         <img src="static/login/JD_img/user_03.png" class="err_img1"/>
@@ -71,10 +72,9 @@
                         <a href="static/login/">忘记密码</a>
                     </li>
                     <li class="ent">
-                        <button class="btn2"><a class="a">登 &nbsp; &nbsp;录</a></button>
+                        <button type="submit" class="btn2"><a>登 &nbsp; &nbsp;录</a></button>
                     </li>
                 </ul>
-
             </form>
         </div>
         <div class="si_out">
@@ -87,9 +87,16 @@
                 </li>
                 <li class="f4"> |</li>
                 <li>
-                    <a href="static/login/">
+                    <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx052fd94446addcfe&redirect_uri=http%3A%2F%2gulimall.com/success%2Foauth_response.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect/">
                         <img src="static/login/JD_img/weixin.png"/>
                         <span>微信</span>
+                    </a>
+                </li>
+                <li class="f4"> |</li>
+                <li>
+                    <a href="https://api.weibo.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redi
+rect_uri=http://gulimall.com/oauth2.0/weibo/success">
+                        <img src="static/login/JD_img/weibo.png" width="50px"/>
                     </a>
                 </li>
             </ul>

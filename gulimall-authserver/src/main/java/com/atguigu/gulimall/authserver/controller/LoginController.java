@@ -6,11 +6,12 @@ import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.authserver.feign.MemeberFeignService;
 import com.atguigu.gulimall.authserver.feign.ThirdPartyFeignService;
+import com.atguigu.gulimall.authserver.vo.UserLoginVo;
 import com.atguigu.gulimall.authserver.vo.UserRegistVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.ribbon.apache.HttpClientUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -135,4 +136,24 @@ public class LoginController {
     }
 
     @PostMapping("/login")
+    public String longin(UserLoginVo vo,RedirectAttributes redirectAttributes){
+        // 远程登录
+        try {
+            R login = memeberFeignService.login(vo);
+            if(login.getCode() == 0){
+                HashMap<String, String> info = new HashMap<>();
+                info.put("msg", login.getData("msg", new TypeReference<String>(){}));
+                redirectAttributes.addFlashAttribute("errors", info);
+                return "redirect:http://gulimall.com";
+            }else {
+                HashMap<String, String> errors = new HashMap<>();
+                errors.put("msg", login.getData("msg", new TypeReference<String>(){}));
+                redirectAttributes.addFlashAttribute("errors", errors);
+                return "redirect:http://auth.gulimall.com/login.html";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:http://auth.gulimall.com/login.html";
+    }
 }
