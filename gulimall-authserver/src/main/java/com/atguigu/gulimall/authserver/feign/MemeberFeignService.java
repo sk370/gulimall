@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.authserver.feign;
 
 import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.authserver.po.WeiboAcctPo;
 import com.atguigu.gulimall.authserver.vo.UserLoginVo;
 import com.atguigu.gulimall.authserver.vo.UserRegistVo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -31,4 +32,12 @@ public interface MemeberFeignService {
      */
     @PostMapping("member/member/login")
     public R login(@RequestBody UserLoginVo vo);
+
+    /**
+     * 用户第三方账号登录
+     * @param po
+     * @return
+     */
+    @PostMapping("member/member/oauth2/login")
+    public R oauthLogin(@RequestBody WeiboAcctPo po);
 }

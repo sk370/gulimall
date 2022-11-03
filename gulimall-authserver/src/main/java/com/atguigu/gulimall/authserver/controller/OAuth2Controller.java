@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.authserver.controller;
 
+import com.atguigu.gulimall.authserver.feign.MemeberFeignService;
 import com.atguigu.gulimall.authserver.po.WeiboAcctPo;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.BasicHttpEntity;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class OAuth2Controller {
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    MemeberFeignService memeberFeignService;
 
     /**
      * 处理微博登录：前台输入微博账号密码会重定向到该请求，并携带code码
@@ -46,13 +49,11 @@ public class OAuth2Controller {
 
         if(weiboAcctPo != null){
             // 查询数据库，判断是否是第一次登录，如果是，同时进行注册
-
+            memeberFeignService.oauthLogin(weiboAcctPo);
+            return "redire:http://gulimall.com";
         } else{
 
             return "redire:http://auth.gulimall.com/login.html";
         }
-
-
-        return "redire:http://gulimall.com";
     }
 }
