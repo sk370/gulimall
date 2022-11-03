@@ -1,10 +1,10 @@
 package com.atguigu.gulimall.product.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 /**
  * 前台页面的二级菜单对象：二级分类vo

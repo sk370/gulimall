@@ -8,9 +8,13 @@
 
 package io.renren.modules.sys.oauth2;
 
-import com.google.gson.Gson;
-import io.renren.common.utils.HttpContextUtils;
-import io.renren.common.utils.R;
+import java.io.IOException;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.shiro.authc.AuthenticationException;
@@ -18,11 +22,10 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import com.google.gson.Gson;
+
+import io.renren.common.utils.HttpContextUtils;
+import io.renren.common.utils.R;
 
 /**
  * oauth2过滤器

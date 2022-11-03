@@ -8,14 +8,16 @@
 
 package io.renren.modules.sys.service.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
 import io.renren.common.utils.MapUtils;
 import io.renren.modules.sys.dao.SysUserRoleDao;
 import io.renren.modules.sys.entity.SysUserRoleEntity;
 import io.renren.modules.sys.service.SysUserRoleService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 

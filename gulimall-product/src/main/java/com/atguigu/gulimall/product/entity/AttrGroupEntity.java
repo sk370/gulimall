@@ -1,11 +1,12 @@
 package com.atguigu.gulimall.product.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 属性分组

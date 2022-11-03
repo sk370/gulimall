@@ -8,13 +8,15 @@
 
 package io.renren.common.utils;
 
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.renren.common.xss.SQLFilter;
-import org.apache.commons.lang.StringUtils;
 
-import java.util.Map;
+import io.renren.common.xss.SQLFilter;
 
 /**
  * 查询参数

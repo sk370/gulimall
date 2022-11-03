@@ -1,10 +1,10 @@
 package com.atguigu.gulimall.member.service;
 
+import java.util.Map;
+
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.member.entity.IntegrationChangeHistoryEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.Map;
 
 /**
  * 积分变化历史记录

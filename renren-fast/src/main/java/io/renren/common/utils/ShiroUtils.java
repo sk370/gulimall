@@ -8,11 +8,12 @@
 
 package io.renren.common.utils;
 
-import io.renren.common.exception.RRException;
-import io.renren.modules.sys.entity.SysUserEntity;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+
+import io.renren.common.exception.RRException;
+import io.renren.modules.sys.entity.SysUserEntity;
 
 /**
  * Shiro工具类

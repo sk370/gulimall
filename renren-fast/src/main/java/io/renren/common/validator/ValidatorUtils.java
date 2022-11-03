@@ -8,12 +8,13 @@
 
 package io.renren.common.validator;
 
-import io.renren.common.exception.RRException;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.util.Set;
+
+import io.renren.common.exception.RRException;
 
 /**
  * hibernate-validator校验工具类

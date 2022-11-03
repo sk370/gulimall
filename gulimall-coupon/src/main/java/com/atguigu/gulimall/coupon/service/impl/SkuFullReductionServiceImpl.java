@@ -1,5 +1,14 @@
 package com.atguigu.gulimall.coupon.service.impl;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.atguigu.common.to.MemberPrice;
 import com.atguigu.common.to.SkuReductionTo;
 import com.atguigu.common.utils.PageUtils;
@@ -14,14 +23,6 @@ import com.atguigu.gulimall.coupon.service.SkuLadderService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service("skuFullReductionService")

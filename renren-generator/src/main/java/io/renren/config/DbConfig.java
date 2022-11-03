@@ -8,14 +8,15 @@
 
 package io.renren.config;
 
-import io.renren.dao.*;
-import io.renren.utils.RRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+
+import io.renren.dao.*;
+import io.renren.utils.RRException;
 
 /**
  * 数据库配置

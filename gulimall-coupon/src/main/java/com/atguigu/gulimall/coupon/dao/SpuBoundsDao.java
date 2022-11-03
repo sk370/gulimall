@@ -1,8 +1,9 @@
 package com.atguigu.gulimall.coupon.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.atguigu.gulimall.coupon.entity.SpuBoundsEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 商品spu积分设置

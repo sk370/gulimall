@@ -1,8 +1,9 @@
 package com.atguigu.gulimall.order.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 订单

@@ -1,17 +1,21 @@
 package com.atguigu.gulimall.thirdparty;
 
-import com.aliyun.oss.ClientException;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.OSSException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import javax.annotation.Resource;
+
+import com.atguigu.gulimall.thirdparty.component.SMSComponent;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.aliyun.oss.ClientException;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.OSSException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,20 +23,23 @@ public class GulimallThirdPartyApplicationTests {
 
     @Resource
     OSSClient ossClient;
+    @Autowired
+    SMSComponent smsComponent;
+
+    @Test
+    public void testSMS(){
+        smsComponent.sendSmsCode("15771758870", "2585");
+    }
+
     @Test
     public void contextLoads() {
     }
+
     /**
      * 依赖配置：测试阿里云OOS文件上传
      */
     @Test
     public void testUpload2(){
-        // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
-//        String endpoint = "https://oss-cn-chengdu.aliyuncs.com";
-        // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-//        String accessKeyId = "LTAI5t65mPsBz6PhbREpcsAk";
-//        String accessKeySecret = "hWKPQUYZKm0uwy03Cw2Aizk3aVHlol";
-        // 填写Bucket名称，例如examplebucket。
         String bucketName = "gulimall-brands-logo";
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String objectName = "3-2.jpg";

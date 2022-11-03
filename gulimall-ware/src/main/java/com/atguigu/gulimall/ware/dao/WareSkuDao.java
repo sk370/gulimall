@@ -1,9 +1,10 @@
 package com.atguigu.gulimall.ware.dao;
 
-import com.atguigu.gulimall.ware.entity.WareSkuEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.atguigu.gulimall.ware.entity.WareSkuEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * 商品库存

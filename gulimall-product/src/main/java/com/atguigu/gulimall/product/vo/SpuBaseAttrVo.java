@@ -2,8 +2,6 @@ package com.atguigu.gulimall.product.vo;
 
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * @author zhuyuqi
  * @version v0.0.1

@@ -1,8 +1,8 @@
 package com.atguigu.common.to;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
+
+import lombok.Data;
 
 /**
  * @author zhuyuqi

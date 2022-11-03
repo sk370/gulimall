@@ -8,12 +8,13 @@
 
 package io.renren.modules.oss.cloud;
 
-import io.renren.common.utils.DateUtils;
-import org.apache.commons.lang.StringUtils;
-
 import java.io.InputStream;
 import java.util.Date;
 import java.util.UUID;
+
+import org.apache.commons.lang.StringUtils;
+
+import io.renren.common.utils.DateUtils;
 
 /**
  * 云存储(支持七牛、阿里云、腾讯云、又拍云)

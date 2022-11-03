@@ -9,10 +9,9 @@
 package io.renren.modules.app.interceptor;
 
 
-import io.jsonwebtoken.Claims;
-import io.renren.common.exception.RRException;
-import io.renren.modules.app.utils.JwtUtils;
-import io.renren.modules.app.annotation.Login;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import io.jsonwebtoken.Claims;
+import io.renren.common.exception.RRException;
+import io.renren.modules.app.annotation.Login;
+import io.renren.modules.app.utils.JwtUtils;
 
 /**
  * 权限(Token)验证

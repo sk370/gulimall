@@ -8,10 +8,10 @@
 
 package io.renren.datasource.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * 多数据源属性

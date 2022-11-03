@@ -8,10 +8,6 @@
 
 package io.renren.modules.app.resolver;
 
-import io.renren.modules.app.annotation.LoginUser;
-import io.renren.modules.app.entity.UserEntity;
-import io.renren.modules.app.interceptor.AuthorizationInterceptor;
-import io.renren.modules.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -20,6 +16,11 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import io.renren.modules.app.annotation.LoginUser;
+import io.renren.modules.app.entity.UserEntity;
+import io.renren.modules.app.interceptor.AuthorizationInterceptor;
+import io.renren.modules.app.service.UserService;
 
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户

@@ -1,15 +1,20 @@
 package com.atguigu.gulimall.member.controller;
 
+import java.util.Arrays;
+import java.util.Map;
+
+import com.atguigu.common.exception.BizCodeEnum;
+import com.atguigu.gulimall.member.exception.PhoneExistException;
+import com.atguigu.gulimall.member.exception.UserNameExistException;
+import com.atguigu.gulimall.member.vo.UserRegistVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.member.entity.MemberEntity;
 import com.atguigu.gulimall.member.feign.CouponFeignService;
 import com.atguigu.gulimall.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Map;
 
 
 
@@ -27,6 +32,22 @@ public class MemberController {
     private MemberService memberService;
     @Autowired
     CouponFeignService couponFeignService;
+
+    /**
+     * 用户注册
+     * @return
+     */
+    @PostMapping("/regist")
+    public R regist(@RequestBody UserRegistVo vo){
+        try {
+            memberService.regist(vo);
+        } catch (UserNameExistException e) {
+            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), e.getMessage());
+        } catch (PhoneExistException e){
+            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), e.getMessage());
+        }
+        return R.ok();
+    }
 
     /**
      * 列表

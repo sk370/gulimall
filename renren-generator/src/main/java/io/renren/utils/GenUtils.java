@@ -1,10 +1,12 @@
 package io.renren.utils;
 
-import io.renren.config.MongoManager;
-import io.renren.entity.ColumnEntity;
-import io.renren.entity.TableEntity;
-import io.renren.entity.mongo.MongoDefinition;
-import io.renren.entity.mongo.MongoGeneratorEntity;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -15,12 +17,11 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import io.renren.config.MongoManager;
+import io.renren.entity.ColumnEntity;
+import io.renren.entity.TableEntity;
+import io.renren.entity.mongo.MongoDefinition;
+import io.renren.entity.mongo.MongoGeneratorEntity;
 
 /**
  * 代码生成器   工具类

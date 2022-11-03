@@ -1,12 +1,13 @@
 package com.atguigu.gulimall.product.dao;
 
-import com.atguigu.gulimall.product.entity.SkuSaleAttrValueEntity;
-import com.atguigu.gulimall.product.vo.SkuItemSaleAttrVo;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.atguigu.gulimall.product.entity.SkuSaleAttrValueEntity;
+import com.atguigu.gulimall.product.vo.SkuItemSaleAttrVo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * sku销售属性&值

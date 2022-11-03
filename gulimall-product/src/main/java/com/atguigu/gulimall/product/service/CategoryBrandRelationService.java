@@ -1,12 +1,12 @@
 package com.atguigu.gulimall.product.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.atguigu.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 品牌分类关联

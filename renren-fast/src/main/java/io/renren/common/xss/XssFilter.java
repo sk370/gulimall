@@ -8,9 +8,10 @@
 
 package io.renren.common.xss;
 
+import java.io.IOException;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
  * XSS过滤

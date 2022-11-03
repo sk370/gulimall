@@ -8,14 +8,16 @@
 
 package io.renren.modules.job.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.validation.constraints.NotBlank;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
 
 /**
  * 定时任务

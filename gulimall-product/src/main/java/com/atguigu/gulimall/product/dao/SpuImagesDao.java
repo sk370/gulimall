@@ -1,8 +1,9 @@
 package com.atguigu.gulimall.product.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.atguigu.gulimall.product.entity.SpuImagesEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * spu图片

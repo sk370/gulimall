@@ -1,8 +1,9 @@
 package com.atguigu.gulimall.member.dao;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.atguigu.gulimall.member.entity.MemberLevelEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 会员等级
@@ -13,5 +14,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface MemberLevelDao extends BaseMapper<MemberLevelEntity> {
-	
+    /**
+     * 自定义sql
+     * @return
+     */
+    MemberLevelEntity getDefaultLevel();
 }

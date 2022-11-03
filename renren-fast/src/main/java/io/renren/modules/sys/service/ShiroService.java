@@ -8,10 +8,10 @@
 
 package io.renren.modules.sys.service;
 
+import java.util.Set;
+
 import io.renren.modules.sys.entity.SysUserEntity;
 import io.renren.modules.sys.entity.SysUserTokenEntity;
-
-import java.util.Set;
 
 /**
  * shiro相关接口

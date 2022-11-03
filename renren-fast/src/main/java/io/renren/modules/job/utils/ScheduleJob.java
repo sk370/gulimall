@@ -8,10 +8,9 @@
 
 package io.renren.modules.job.utils;
 
-import io.renren.common.utils.SpringContextUtils;
-import io.renren.modules.job.entity.ScheduleJobEntity;
-import io.renren.modules.job.entity.ScheduleJobLogEntity;
-import io.renren.modules.job.service.ScheduleJobLogService;
+import java.lang.reflect.Method;
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -19,8 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import java.lang.reflect.Method;
-import java.util.Date;
+import io.renren.common.utils.SpringContextUtils;
+import io.renren.modules.job.entity.ScheduleJobEntity;
+import io.renren.modules.job.entity.ScheduleJobLogEntity;
+import io.renren.modules.job.service.ScheduleJobLogService;
 
 
 /**

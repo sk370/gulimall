@@ -1,10 +1,10 @@
 package io.renren.config;
 
 
-import io.renren.entity.mongo.MongoDefinition;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import io.renren.entity.mongo.MongoDefinition;
 
 /**
  * @author gxz

@@ -8,9 +8,8 @@
 
 package io.renren.modules.sys.oauth2;
 
-import io.renren.modules.sys.entity.SysUserEntity;
-import io.renren.modules.sys.entity.SysUserTokenEntity;
-import io.renren.modules.sys.service.ShiroService;
+import java.util.Set;
+
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -19,7 +18,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import io.renren.modules.sys.entity.SysUserEntity;
+import io.renren.modules.sys.entity.SysUserTokenEntity;
+import io.renren.modules.sys.service.ShiroService;
 
 /**
  * 认证

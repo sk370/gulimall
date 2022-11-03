@@ -9,8 +9,8 @@
 package io.renren.datasource.aspect;
 
 
-import io.renren.datasource.annotation.DataSource;
-import io.renren.datasource.config.DynamicContextHolder;
+import java.lang.reflect.Method;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,7 +22,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
+import io.renren.datasource.annotation.DataSource;
+import io.renren.datasource.config.DynamicContextHolder;
 
 /**
  * 多数据源，切面处理类

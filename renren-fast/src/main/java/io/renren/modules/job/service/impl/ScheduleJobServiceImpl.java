@@ -8,16 +8,10 @@
 
 package io.renren.modules.job.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.renren.common.utils.Constant;
-import io.renren.common.utils.PageUtils;
-import io.renren.common.utils.Query;
-import io.renren.modules.job.dao.ScheduleJobDao;
-import io.renren.modules.job.entity.ScheduleJobEntity;
-import io.renren.modules.job.service.ScheduleJobService;
-import io.renren.modules.job.utils.ScheduleUtils;
+import java.util.*;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang.StringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
@@ -25,8 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import io.renren.common.utils.Constant;
+import io.renren.common.utils.PageUtils;
+import io.renren.common.utils.Query;
+import io.renren.modules.job.dao.ScheduleJobDao;
+import io.renren.modules.job.entity.ScheduleJobEntity;
+import io.renren.modules.job.service.ScheduleJobService;
+import io.renren.modules.job.utils.ScheduleUtils;
 
 @Service("scheduleJobService")
 public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobDao, ScheduleJobEntity> implements ScheduleJobService {

@@ -1,21 +1,14 @@
 package com.atguigu.gulimall.search.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.atguigu.common.to.es.SkuESModel;
-import com.atguigu.common.utils.R;
-import com.atguigu.gulimall.search.config.GulimallElasticSearchConfig;
-import com.atguigu.gulimall.search.constant.ESConstant;
-import com.atguigu.gulimall.search.feign.ProductFeignService;
-import com.atguigu.gulimall.search.service.MallSearchService;
-import com.atguigu.gulimall.search.vo.AttrResponseVo;
-import com.atguigu.gulimall.search.vo.BrandVo;
-import com.atguigu.gulimall.search.vo.SearchParam;
-import com.atguigu.gulimall.search.vo.SearchResult;
-import org.apache.lucene.search.TotalHits;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -24,7 +17,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
@@ -40,13 +32,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.atguigu.common.to.es.SkuESModel;
+import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.search.config.GulimallElasticSearchConfig;
+import com.atguigu.gulimall.search.constant.ESConstant;
+import com.atguigu.gulimall.search.feign.ProductFeignService;
+import com.atguigu.gulimall.search.service.MallSearchService;
+import com.atguigu.gulimall.search.vo.AttrResponseVo;
+import com.atguigu.gulimall.search.vo.BrandVo;
+import com.atguigu.gulimall.search.vo.SearchParam;
+import com.atguigu.gulimall.search.vo.SearchResult;
 
 /**
  * @author zhuyuqi

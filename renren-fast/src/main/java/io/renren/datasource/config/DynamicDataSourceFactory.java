@@ -8,10 +8,11 @@
 
 package io.renren.datasource.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import io.renren.datasource.properties.DataSourceProperties;
-
 import java.sql.SQLException;
+
+import com.alibaba.druid.pool.DruidDataSource;
+
+import io.renren.datasource.properties.DataSourceProperties;
 
 /**
  * DruidDataSource

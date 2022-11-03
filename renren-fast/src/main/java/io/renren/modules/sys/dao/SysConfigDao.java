@@ -9,10 +9,12 @@
 package io.renren.modules.sys.dao;
 
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.renren.modules.sys.entity.SysConfigEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import io.renren.modules.sys.entity.SysConfigEntity;
 
 /**
  * 系统配置信息

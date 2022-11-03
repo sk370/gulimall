@@ -8,11 +8,13 @@
 
 package io.renren.modules.sys.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.renren.modules.sys.entity.SysUserRoleEntity;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import io.renren.modules.sys.entity.SysUserRoleEntity;
 
 /**
  * 用户与角色对应关系

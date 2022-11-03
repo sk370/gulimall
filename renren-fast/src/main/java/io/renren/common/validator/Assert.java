@@ -8,8 +8,9 @@
 
 package io.renren.common.validator;
 
-import io.renren.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
+
+import io.renren.common.exception.RRException;
 
 /**
  * 数据校验

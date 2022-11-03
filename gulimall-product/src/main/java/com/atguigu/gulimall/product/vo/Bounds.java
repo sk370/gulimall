@@ -3,9 +3,9 @@
   */
 package com.atguigu.gulimall.product.vo;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
+
+import lombok.Data;
 
 /**
  * Auto-generated: 2019-11-26 10:50:34

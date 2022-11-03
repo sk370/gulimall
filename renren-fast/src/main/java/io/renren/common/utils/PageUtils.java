@@ -8,10 +8,10 @@
 
 package io.renren.common.utils;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * 分页工具类

@@ -1,12 +1,13 @@
 package com.atguigu.gulimall.product.feign;
 
-import com.atguigu.common.to.es.SkuESModel;
-import com.atguigu.common.utils.R;
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
+import com.atguigu.common.to.es.SkuESModel;
+import com.atguigu.common.utils.R;
 
 /**
  * ES有关的接口

@@ -1,9 +1,9 @@
 package com.atguigu.common.to.es;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.util.List;
+
+import lombok.Data;
 
 /**
  * ES中mapping对应的数据对象

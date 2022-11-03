@@ -10,6 +10,15 @@ spring:
       oss:
         endpoint: oss-cn-chengdu.aliyuncs.com
         bucket: gulimall-brands-logo
+
+      sms:
+        accessKeyId: LTAI5t7vJ5HhNKR2y5RVcirt
+        accessKeySecret: yXeqlGqN6P8LsV9wbCHj2ckf2GUJQr
+        endpoint: dysmsapi.aliyuncs.com
+        signName: 阿里云短信测试
+        templateCode: SMS_154950909
+
+
   application:
     name: gulimall-third-party
 

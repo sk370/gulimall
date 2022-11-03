@@ -8,8 +8,9 @@
 
 package com.atguigu.common.xss;
 
-import com.atguigu.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
+
+import com.atguigu.common.exception.RRException;
 
 /**
  * SQL过滤

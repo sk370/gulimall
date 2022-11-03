@@ -1,10 +1,11 @@
 package com.atguigu.gulimall.product.vo;
 
+import java.util.List;
+
 import com.atguigu.gulimall.product.entity.AttrEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
 
-import java.util.List;
+import lombok.Data;
 
 /**
  * @author zhuyuqi

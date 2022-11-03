@@ -1,10 +1,10 @@
 package io.renren.entity.mongo;
 
 
-import io.renren.entity.TableEntity;
-
 import java.util.List;
 import java.util.Map;
+
+import io.renren.entity.TableEntity;
 
 /**
  * mysql一张表只需要一个表信息和列名信息

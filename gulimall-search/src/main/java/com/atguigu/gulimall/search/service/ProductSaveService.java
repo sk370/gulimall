@@ -1,10 +1,9 @@
 package com.atguigu.gulimall.search.service;
 
-import com.atguigu.common.to.es.SkuESModel;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.List;
+
+import com.atguigu.common.to.es.SkuESModel;
 
 /**
  * @author zhuyuqi

@@ -8,10 +8,10 @@
 
 package io.renren.common.utils;
 
-import org.apache.http.HttpStatus;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.http.HttpStatus;
 
 /**
  * 返回数据

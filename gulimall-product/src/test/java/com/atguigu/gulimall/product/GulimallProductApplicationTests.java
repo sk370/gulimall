@@ -1,22 +1,22 @@
 package com.atguigu.gulimall.product;
 
-import com.atguigu.gulimall.product.dao.AttrGroupDao;
-import com.atguigu.gulimall.product.dao.SkuSaleAttrValueDao;
-import com.atguigu.gulimall.product.service.BrandService;
-import com.atguigu.gulimall.product.service.CategoryService;
-import com.atguigu.gulimall.product.service.SkuSaleAttrValueService;
-import com.atguigu.gulimall.product.vo.SkuItemSaleAttrVo;
-import com.atguigu.gulimall.product.vo.SkuItemVo;
-import com.atguigu.gulimall.product.vo.SpuItemAttrGroupVo;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.List;
+import com.atguigu.gulimall.product.dao.AttrGroupDao;
+import com.atguigu.gulimall.product.dao.SkuSaleAttrValueDao;
+import com.atguigu.gulimall.product.service.BrandService;
+import com.atguigu.gulimall.product.service.CategoryService;
+import com.atguigu.gulimall.product.vo.SkuItemSaleAttrVo;
+import com.atguigu.gulimall.product.vo.SpuItemAttrGroupVo;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Slf4j

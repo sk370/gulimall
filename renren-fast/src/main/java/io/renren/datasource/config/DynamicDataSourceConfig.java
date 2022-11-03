@@ -8,17 +8,19 @@
 
 package io.renren.datasource.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import io.renren.datasource.properties.DataSourceProperties;
-import io.renren.datasource.properties.DynamicDataSourceProperties;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.druid.pool.DruidDataSource;
+
+import io.renren.datasource.properties.DataSourceProperties;
+import io.renren.datasource.properties.DynamicDataSourceProperties;
 
 /**
  * 配置多数据源

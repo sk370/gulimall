@@ -1,5 +1,10 @@
 package com.atguigu.gulimall.ware.service.impl;
 
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
 import com.atguigu.gulimall.ware.dao.WareInfoDao;
@@ -8,10 +13,6 @@ import com.atguigu.gulimall.ware.service.WareInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.Map;
 
 
 @Service("wareInfoService")

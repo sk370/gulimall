@@ -8,7 +8,17 @@
 
 package io.renren.modules.oss.controller;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.google.gson.Gson;
+
 import io.renren.common.exception.RRException;
 import io.renren.common.utils.ConfigConstant;
 import io.renren.common.utils.Constant;
@@ -23,14 +33,6 @@ import io.renren.modules.oss.cloud.OSSFactory;
 import io.renren.modules.oss.entity.SysOssEntity;
 import io.renren.modules.oss.service.SysOssService;
 import io.renren.modules.sys.service.SysConfigService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
 
 /**
  * 文件上传

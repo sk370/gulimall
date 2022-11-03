@@ -1,7 +1,5 @@
 package com.atguigu.common.constant;
 
-import org.w3c.dom.Attr;
-
 /**
  * 与商品相关的常量
  * @author zhuyuqi

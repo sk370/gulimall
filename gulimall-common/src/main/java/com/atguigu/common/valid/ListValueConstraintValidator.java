@@ -1,9 +1,10 @@
 package com.atguigu.common.valid;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 /**
  * @author zhuyuqi

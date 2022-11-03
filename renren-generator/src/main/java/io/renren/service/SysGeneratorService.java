@@ -8,8 +8,18 @@
 
 package io.renren.service;
 
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+
 import io.renren.config.MongoManager;
 import io.renren.dao.GeneratorDao;
 import io.renren.dao.MongoDBGeneratorDao;
@@ -17,14 +27,6 @@ import io.renren.factory.MongoDBCollectionFactory;
 import io.renren.utils.GenUtils;
 import io.renren.utils.PageUtils;
 import io.renren.utils.Query;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.ZipOutputStream;
 
 /**
  * 代码生成器

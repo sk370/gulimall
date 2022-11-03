@@ -1,11 +1,12 @@
 package com.atguigu.gulimall.product.dao;
 
-import com.atguigu.gulimall.product.entity.AttrAttrgroupRelationEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.atguigu.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * 属性&属性分组关联

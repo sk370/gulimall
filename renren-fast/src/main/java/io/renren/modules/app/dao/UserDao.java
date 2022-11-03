@@ -8,9 +8,11 @@
 
 package io.renren.modules.app.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import io.renren.modules.app.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import io.renren.modules.app.entity.UserEntity;
 
 /**
  * 用户

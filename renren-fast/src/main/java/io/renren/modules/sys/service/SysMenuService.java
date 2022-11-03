@@ -9,10 +9,11 @@
 package io.renren.modules.sys.service;
 
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import io.renren.modules.sys.entity.SysMenuEntity;
-
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import io.renren.modules.sys.entity.SysMenuEntity;
 
 
 /**

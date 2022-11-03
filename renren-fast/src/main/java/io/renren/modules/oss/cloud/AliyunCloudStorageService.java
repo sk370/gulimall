@@ -8,11 +8,12 @@
 
 package io.renren.modules.oss.cloud;
 
-import com.aliyun.oss.OSSClient;
-import io.renren.common.exception.RRException;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+
+import com.aliyun.oss.OSSClient;
+
+import io.renren.common.exception.RRException;
 
 /**
  * 阿里云存储

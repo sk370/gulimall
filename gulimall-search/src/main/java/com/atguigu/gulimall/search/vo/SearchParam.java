@@ -1,8 +1,8 @@
 package com.atguigu.gulimall.search.vo;
 
-import lombok.Data;
-
 import java.util.List;
+
+import lombok.Data;
 
 /**
  * 封装页面所有可能传递过来的查询条件

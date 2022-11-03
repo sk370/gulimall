@@ -8,12 +8,13 @@
 
 package io.renren.common.utils;
 
-import com.google.gson.Gson;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.TimeUnit;
+import com.google.gson.Gson;
 
 /**
  * Redis工具类

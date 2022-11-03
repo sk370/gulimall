@@ -1,13 +1,13 @@
 package com.atguigu.gulimall.product.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.product.entity.SkuInfoEntity;
 import com.atguigu.gulimall.product.vo.SkuItemVo;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * sku信息

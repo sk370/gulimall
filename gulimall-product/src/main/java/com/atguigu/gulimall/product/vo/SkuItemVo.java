@@ -1,11 +1,12 @@
 package com.atguigu.gulimall.product.vo;
 
+import java.util.List;
+
 import com.atguigu.gulimall.product.entity.SkuImagesEntity;
 import com.atguigu.gulimall.product.entity.SkuInfoEntity;
 import com.atguigu.gulimall.product.entity.SpuInfoDescEntity;
-import lombok.Data;
 
-import java.util.List;
+import lombok.Data;
 
 /**
  * 详情页商品对象

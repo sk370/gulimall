@@ -1,15 +1,17 @@
 package com.atguigu.gulimall.product.exception;
 
-import com.atguigu.common.exception.BizCodeEnum;
-import com.atguigu.common.utils.R;
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.atguigu.common.exception.BizCodeEnum;
+import com.atguigu.common.utils.R;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 对前端传过来的数据进行校验，校验不通过抛出异常，该类用于处理异常

@@ -1,13 +1,8 @@
-package ${package}.${moduleName}.entity;
+package ${package}import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-#if(${hasBigDecimal})
-import java.math.BigDecimal;
-#end
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**

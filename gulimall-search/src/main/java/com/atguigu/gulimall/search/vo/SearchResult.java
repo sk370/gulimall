@@ -1,10 +1,11 @@
 package com.atguigu.gulimall.search.vo;
 
-import com.atguigu.common.to.es.SkuESModel;
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.atguigu.common.to.es.SkuESModel;
+
+import lombok.Data;
 
 /**
  * 查询后返回给页面的数据

@@ -1,12 +1,12 @@
 package io.renren.adaptor;
 
-import io.renren.entity.mongo.MongoDefinition;
-import io.renren.entity.mongo.Type;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.renren.entity.mongo.MongoDefinition;
+import io.renren.entity.mongo.Type;
 
 /**
  * mongo适配器

@@ -1,18 +1,19 @@
 package io.renren.dao;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.stereotype.Repository;
+
 import io.renren.adaptor.MongoTableInfoAdaptor;
 import io.renren.config.MongoCondition;
 import io.renren.config.MongoManager;
 import io.renren.entity.mongo.MongoDefinition;
 import io.renren.factory.MongoDBCollectionFactory;
 import io.renren.utils.MongoScanner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Repository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author: gxz gongxuanzhang@foxmail.com

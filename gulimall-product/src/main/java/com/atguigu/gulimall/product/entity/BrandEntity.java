@@ -1,16 +1,19 @@
 package com.atguigu.gulimall.product.entity;
 
+import java.io.Serializable;
+
+import javax.validation.constraints.*;
+
+import org.hibernate.validator.constraints.URL;
+
 import com.atguigu.common.valid.AddGroup;
 import com.atguigu.common.valid.ListValue;
 import com.atguigu.common.valid.UpdateGroup;
 import com.atguigu.common.valid.UpdateStatusGroup;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.*;
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 品牌

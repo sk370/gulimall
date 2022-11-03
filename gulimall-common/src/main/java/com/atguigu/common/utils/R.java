@@ -8,13 +8,13 @@
 
 package com.atguigu.common.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.atguigu.common.to.SkuHasStockVo;
-import org.apache.http.HttpStatus;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.http.HttpStatus;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
 /**
  * 返回数据
