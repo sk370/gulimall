@@ -4,12 +4,12 @@ import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.common.utils.R;
+import com.atguigu.common.vo.MemberRespVo;
 import com.atguigu.gulimall.authserver.feign.MemeberFeignService;
 import com.atguigu.gulimall.authserver.feign.ThirdPartyFeignService;
 import com.atguigu.gulimall.authserver.vo.UserLoginVo;
 import com.atguigu.gulimall.authserver.vo.UserRegistVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.netflix.ribbon.apache.HttpClientUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,15 +47,25 @@ public class LoginController {
     @Autowired
     MemeberFeignService memeberFeignService;
 
-//    @GetMapping({"/","/login.html"})
-//    public String loginPage(){
-//        return "login";
-//    }
-//
-//    @GetMapping("/register.html")
-//    public String regPage(){
-//        return "register";
-//    }
+    @GetMapping({"/","/login.html"})
+    public String loginPage(HttpSession session){
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        if(attribute == null){
+            return "login";
+        }else{
+            return "redirect:http://gulimall.com";
+        }
+    }
+
+    @GetMapping("/register.html")
+    public String regPage(HttpSession session){
+        Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
+        if(attribute == null){
+            return "register";
+        }else{
+            return "redirect:http://gulimall.com";
+        }
+    }
 
     /**
      * 获取短信验证码
@@ -136,19 +147,20 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String longin(UserLoginVo vo,RedirectAttributes redirectAttributes){
-        // 远程登录
+    public String longin(UserLoginVo vo, HttpSession session){
+        // 调用远程服务登录
         try {
             R login = memeberFeignService.login(vo);
             if(login.getCode() == 0){
-                HashMap<String, String> info = new HashMap<>();
-                info.put("msg", login.getData("msg", new TypeReference<String>(){}));
-                redirectAttributes.addFlashAttribute("errors", info);
+                MemberRespVo memberRespVo = login.getData("msg", new TypeReference<MemberRespVo>() {
+                });
+                System.out.println(memberRespVo + "~~~~~~~~~~~~~~~~~~~~~~~~");
+                session.setAttribute(AuthServerConstant.LOGIN_USER, memberRespVo);
                 return "redirect:http://gulimall.com";
             }else {
                 HashMap<String, String> errors = new HashMap<>();
                 errors.put("msg", login.getData("msg", new TypeReference<String>(){}));
-                redirectAttributes.addFlashAttribute("errors", errors);
+                session.setAttribute("errors", errors);
                 return "redirect:http://auth.gulimall.com/login.html";
             }
         } catch (Exception e) {

@@ -9,4 +9,5 @@ package com.atguigu.common.constant;
  */
 public class AuthServerConstant {
     public static final String SMS_CODE_CACHE_PREFIX = "sms:code";//短信验证码缓存前缀
+    public static final String LOGIN_USER = "loginUser";//登录成功的用户
 }

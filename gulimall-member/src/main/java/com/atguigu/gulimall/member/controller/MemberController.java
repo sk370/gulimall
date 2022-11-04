@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.Map;
 
 import com.atguigu.common.exception.BizCodeEnum;
+import com.atguigu.common.vo.MemberRespVo;
 import com.atguigu.gulimall.member.exception.PhoneExistException;
 import com.atguigu.gulimall.member.exception.UserNameExistException;
 import com.atguigu.gulimall.member.po.WeiboAcctPo;
 import com.atguigu.gulimall.member.vo.UserLoginVo;
 import com.atguigu.gulimall.member.vo.UserRegistVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,9 +45,12 @@ public class MemberController {
      */
     @PostMapping("oauth2/login")
     public R oauthLogin(@RequestBody WeiboAcctPo po){
+        System.out.println(po);
         MemberEntity entity = memberService.login(po);
         if(entity!=null){
-            return R.ok();
+            MemberRespVo memberEntity = new MemberRespVo();
+            BeanUtils.copyProperties(entity, memberEntity);
+            return R.ok().put("msg", memberEntity);
         }else {
             return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getCode(), BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getMsg());
         }
@@ -60,7 +65,9 @@ public class MemberController {
     public R login(@RequestBody UserLoginVo vo){
         MemberEntity entity = memberService.login(vo);
         if(entity!=null){
-            return R.ok();
+            MemberRespVo memberEntity = new MemberRespVo();
+            BeanUtils.copyProperties(entity, memberEntity);
+            return R.ok().put("msg", memberEntity);
         }else {
             return R.error(BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getCode(), BizCodeEnum.LOGINACCT_PASSWORD_INVLAID_EXCEPTION.getMsg());
         }

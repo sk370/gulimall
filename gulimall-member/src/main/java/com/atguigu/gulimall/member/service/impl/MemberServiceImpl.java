@@ -14,9 +14,12 @@ import com.atguigu.gulimall.member.exception.UserNameExistException;
 import com.atguigu.gulimall.member.po.WeiboAcctPo;
 import com.atguigu.gulimall.member.vo.UserLoginVo;
 import com.atguigu.gulimall.member.vo.UserRegistVo;
-import org.apache.http.HttpEntity;
 import org.apache.http.entity.BasicHttpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +31,8 @@ import com.atguigu.gulimall.member.service.MemberService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -88,7 +93,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         String password = vo.getPassword();
         MemberEntity memberEntity = baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("username", loginacct).or().eq("mobile", loginacct));
         if(memberEntity == null){
-            // 可以采用异常机制，抛出特定异常——同注册
+            // 可以采用异常机制，抛出特定异常——同注册【这里犯懒没写】
             return null;
         } else {
             String passwordDB = memberEntity.getPassword();
@@ -126,19 +131,28 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             entity.setSocialUid(po.getUid());
             entity.setStatus(1);
             try {//远程请求失败，不影响正常登录
-                // 获取社交账号的详细信息
+
+                // 模拟表单发送post请求
+                // 请求头设置,x-www-form-urlencoded格式的数据
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+                //提交参数设置
                 Map<String, String> map = new HashMap<>();
                 map.put("access_token", po.getAccess_token());
                 map.put("uid", po.getUid());
-                String result = restTemplate.getForObject("https://api.weibo.com/2/users/show.json", String.class, map);
+
+                // get，并打印结果
+                String url = "https://api.weibo.com/2/users/show.json?access_token={access_token}&uid={uid}";
+                String result = restTemplate.getForObject(url,String.class,map);
                 System.out.println(result + "~~~~~~~~~~~~~~~~~~~~~~");
-//            if(result != null){// 判断返回结果
-                JSONObject parseObject = JSON.parseObject(result);
-                String gender = parseObject.getString("gender");
-                String nickName = parseObject.getString("nickName");
-//            }
-                entity.setNickname(nickName);
-                entity.setGender(Objects.equals("m",gender)?1:0);
+                if(result != null){// 判断返回结果
+                    JSONObject parseObject = JSON.parseObject(result);
+                    String gender = parseObject.getString("gender");
+                    String nickName = parseObject.getString("nickName");
+                    entity.setNickname(nickName);
+                    entity.setGender(Objects.equals("m",gender)?1:0);
+                }
             } catch (RestClientException e) {
                 e.printStackTrace();
             }

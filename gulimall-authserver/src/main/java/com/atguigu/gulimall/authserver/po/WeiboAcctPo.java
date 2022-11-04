@@ -11,9 +11,9 @@ import lombok.Data;
  */
 @Data
 public class WeiboAcctPo {
-    private String access_token;
-    private String remind_in;
-    private String uid;
-    private long expires_in;
-    private String isRealName;
+    private String access_token;//access_token
+    private String remind_in;//remind_in
+    private String uid;//uid
+    private long expires_in;//expires_in
+    private String isRealName;//isRealName
 }
