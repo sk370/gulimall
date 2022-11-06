@@ -14,6 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class GulimallWebConfig implements WebMvcConfigurer {
+    /**
+     * 添加视图解析器
+     * @param registry
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         /**

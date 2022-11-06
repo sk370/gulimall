@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,16 @@ import com.atguigu.gulimall.product.service.SkuSaleAttrValueService;
 public class SkuSaleAttrValueController {
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+
+    /**
+     * 获取指定商品所有销售属性
+     * @return
+     */
+    @GetMapping("/stringList/{skuId}")
+    public List<String> getSkuSaleAttrValues(@PathVariable("skuId") Long skuId){
+        List<String> skuAttrValues = skuSaleAttrValueService.getSkuSaleAttrValuesAsStringList(skuId);
+        return skuAttrValues;
+    }
 
     /**
      * 列表

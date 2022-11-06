@@ -15,6 +15,11 @@
         <module>gulimall-order</module>
         <module>gulimall-product</module>
         <module>gulimall-ware</module>
+        <module>gulimall-cart</module>
+        <module>gulimall-search</module>
+        <module>gulimall-third-party</module>
+        <module>gulimall-getway</module>
+        <module>gulimall-authserver</module>
         <module>renren-fast</module>
         <module>renren-generator</module>
     </modules>
