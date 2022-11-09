@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.atguigu.common.exception.BizCodeEnum;
+import com.atguigu.common.exception.NoStockException;
+import com.atguigu.gulimall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +30,21 @@ import com.atguigu.gulimall.ware.service.WareSkuService;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    /**
+     * 根据订单中的订单项，锁定库存
+     * @param vo
+     * @return 各个订单项的锁定成功信息
+     */
+    @PostMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo){
+        try {
+            wareSkuService.orderLockStock(vo);
+            return R.ok();
+        } catch (NoStockException e) {
+            return R.error(BizCodeEnum.NO_STOCK_EXCEPTION.getCode(),BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
 
     /**
      * 查询sku是否有库存

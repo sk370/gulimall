@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.atguigu.common.exception.NoStockException;
+import com.atguigu.gulimall.ware.vo.OrderItemVo;
+import com.atguigu.gulimall.ware.vo.WareSkuLockVo;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.atguigu.common.to.SkuHasStockVo;
@@ -82,6 +87,60 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             return vo;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    @Transactional(rollbackFor = NoStockException.class)//可以不标NoStockException，因为它继承于runtimeexception，只要是exception，默认都会回滚
+    @Override
+    public Boolean orderLockStock(WareSkuLockVo vo) {
+        // 1. 按照下单的收获地址，找到一个就近的仓库锁定库存
+        // 1.1 找到每个商品在哪个仓库有库存
+        List<OrderItemVo> locks = vo.getLocks();//得到每个商品项
+        List<SkuWareHasStock> collect = locks.stream().map(item -> {
+            SkuWareHasStock stock = new SkuWareHasStock();
+            Long skuId = item.getSkuId();
+            stock.setSkuId(skuId);
+            stock.setNum(item.getCount());
+            // 1.1.1 查询当前sku在哪个仓库有库存
+            List<Long> wareIds = this.baseMapper.listWareIdHasSkuStock(skuId);
+            stock.setWareId(wareIds);
+            return stock;
+        }).collect(Collectors.toList());
+
+        // 2. 锁定库存
+        for(SkuWareHasStock hasStock : collect){
+            Boolean skuStocked = false;//当前商品库存锁定标志位
+            Long skuId = hasStock.getSkuId();
+            List<Long> wareIds = hasStock.getWareId();
+            if(wareIds == null || wareIds.size() == 0){//所有仓库都没这个商品
+                throw new NoStockException(skuId);
+            }
+            // 遍历每一个仓库
+            for(Long wareId : wareIds){
+                Long count = this.baseMapper.lockSkuStock(skuId, wareId, hasStock.getNum());//返回影响行数
+                if(count == 1){
+                    skuStocked = true;
+                    break;//
+                }else{//当前仓库锁定失败，重试下一个仓库
+
+                }
+            }
+            if(!skuStocked){//所有仓库都遍历完了但是还没锁住库存
+                throw new NoStockException(skuId);
+            }
+        }
+
+        // 3. 能到这里肯定都是全部锁定成功了
+        return true;
+    }
+
+    /**
+     * 只在本类中使用，所以可以设置为内部类
+     */
+    @Data
+    class SkuWareHasStock{
+        private Long skuId;
+        private List<Long> wareId;
+        private Integer num;
     }
 
 }

@@ -6,6 +6,8 @@ import java.util.Map;
 import com.atguigu.common.to.SkuHasStockVo;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
+import com.atguigu.gulimall.ware.vo.LockStockResultVo;
+import com.atguigu.gulimall.ware.vo.WareSkuLockVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -33,5 +35,12 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @return
      */
     List<SkuHasStockVo> getSkuHasStock(List<Long> skuIds);
+
+    /**
+     * 自定义方法
+     * @param vo
+     * @return
+     */
+    Boolean orderLockStock(WareSkuLockVo vo);
 }
 

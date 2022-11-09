@@ -1,8 +1,9 @@
-package com.atguigu.gulimallcart.controller.service;
+package com.atguigu.gulimallcart.service;
 
 import com.atguigu.gulimallcart.vo.Cart;
 import com.atguigu.gulimallcart.vo.CartItem;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -59,4 +60,10 @@ public interface CartService {
      * @param skuId
      */
     void deleteItem(String skuId);
+
+    /**
+     * 自定义方法：从redis获取当前用户购物项
+     * @return
+     */
+    List<CartItem> getUserCartItems();
 }

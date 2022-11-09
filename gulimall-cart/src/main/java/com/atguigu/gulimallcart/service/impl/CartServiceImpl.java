@@ -1,5 +1,6 @@
-package com.atguigu.gulimallcart.controller.service.impl;
+package com.atguigu.gulimallcart.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -16,7 +17,7 @@ import org.springframework.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.utils.R;
-import com.atguigu.gulimallcart.controller.service.CartService;
+import com.atguigu.gulimallcart.service.CartService;
 import com.atguigu.gulimallcart.feign.ProductFeignService;
 import com.atguigu.gulimallcart.interceptor.CartInterceptor;
 import com.atguigu.gulimallcart.to.UserInfoTo;
@@ -146,6 +147,26 @@ public class CartServiceImpl implements CartService {
     public void deleteItem(String skuId) {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
         cartOps.delete(skuId.toString());
+    }
+
+    @Override
+    public List<CartItem> getUserCartItems() {
+        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        if(userInfoTo.getUserId() == null){//当前用户未登录
+            return null;
+        }else {
+            String cartKey = CART_PREFIX + userInfoTo.getUserId();//已登录用户的cartkey，用于从redis获取购物项
+            List<CartItem> cartItems = getCartItems(cartKey);//获取所有购物项
+            List<CartItem> collect = cartItems.stream()
+                    .filter(item -> {return item.getCheck();})// 过滤已选中购物项
+                    .map(item -> {
+                        // 远程查询价格
+                        BigDecimal price = productFeignService.getPrice(item.getSkuId());
+                        item.setPrice(price);//更新为最新价格，防止出现一年前加入的购物车
+                        return item;
+                    }).collect(Collectors.toList());
+            return collect;
+        }
     }
 
     /**

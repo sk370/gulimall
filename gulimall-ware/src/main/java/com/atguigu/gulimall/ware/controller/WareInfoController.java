@@ -1,8 +1,10 @@
 package com.atguigu.gulimall.ware.controller;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.atguigu.gulimall.ware.vo.FareRespvO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,18 @@ import com.atguigu.gulimall.ware.service.WareInfoService;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
+    /**
+     * 选中地址后计算运费
+     * @param addrId
+     * @return
+     */
+    @GetMapping("/fare")
+    public R getFare(@RequestParam("addrId") Long addrId){
+        FareRespvO fare = wareInfoService.getFare(addrId);
+        System.out.println(fare + "~~~~~~~~~~~~~~~~~~~~~");
+        return R.ok().setData(fare);
+    }
 
     /**
      * 列表

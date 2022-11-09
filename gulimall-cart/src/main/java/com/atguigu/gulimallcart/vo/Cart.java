@@ -48,7 +48,9 @@ public class Cart {
 
         if(items != null && items.size() > 0) {
             for (CartItem item : items) {
-                amount = amount.add(item.getTotalPrice());
+                if(item.getCheck()) {
+                    amount = amount.add(item.getTotalPrice());
+                }
             }
         }
         totalAmount = amount.subtract(getReduce());

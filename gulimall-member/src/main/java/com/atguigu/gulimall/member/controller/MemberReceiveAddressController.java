@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.member.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,16 @@ import com.atguigu.gulimall.member.service.MemberReceiveAddressService;
 public class MemberReceiveAddressController {
     @Autowired
     private MemberReceiveAddressService memberReceiveAddressService;
+
+    /**
+     * 获取当前会员的收获地址信息
+     * @param memberId
+     * @return
+     */
+    @GetMapping("{memberId}/address")
+    public List<MemberReceiveAddressEntity> getAddress(@PathVariable("memberId") Long memberId){
+        return memberReceiveAddressService.getAddress(memberId);
+    }
 
     /**
      * 列表

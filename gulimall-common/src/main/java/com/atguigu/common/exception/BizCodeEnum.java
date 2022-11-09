@@ -22,7 +22,8 @@ public enum BizCodeEnum {
     PRODUCT_UP_EXCEPTION(11000, "商品上架异常"),
     USER_EXIST_EXCEPTION(15001, "用户名已占用"),
     PHONE_EXIST_EXCEPTION(15002, "该号码已注册"),
-    LOGINACCT_PASSWORD_INVLAID_EXCEPTION(15003, "账户名或密码错误");
+    LOGINACCT_PASSWORD_INVLAID_EXCEPTION(15003, "账户名或密码错误"),
+    NO_STOCK_EXCEPTION(21000, "商品库存不足");
     private int code;
     private String msg;
     BizCodeEnum(int code, String msg){

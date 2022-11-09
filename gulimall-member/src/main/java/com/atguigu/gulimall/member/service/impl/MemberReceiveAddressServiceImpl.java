@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.member.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +26,11 @@ public class MemberReceiveAddressServiceImpl extends ServiceImpl<MemberReceiveAd
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<MemberReceiveAddressEntity> getAddress(Long memberId) {
+        return this.list(new QueryWrapper<MemberReceiveAddressEntity>().eq("member_id",memberId));
     }
 
 }
