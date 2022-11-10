@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.atguigu.common.to.SkuHasStockVo;
+import com.atguigu.common.to.mq.OrderEntityTo;
+import com.atguigu.common.to.mq.StockLockedTo;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
 import com.atguigu.gulimall.ware.vo.LockStockResultVo;
@@ -42,5 +44,17 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @return
      */
     Boolean orderLockStock(WareSkuLockVo vo);
+
+    /**
+     * 自定义方法
+     * @param to
+     */
+    void unLockStock(StockLockedTo to);
+
+    /**
+     * 自定义方法
+     * @param to
+     */
+    void unLockStock(OrderEntityTo to);
 }
 

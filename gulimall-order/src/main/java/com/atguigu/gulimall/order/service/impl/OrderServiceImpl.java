@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.exception.NoStockException;
 import com.atguigu.common.to.SkuHasStockVo;
+import com.atguigu.common.to.mq.OrderEntityTo;
 import com.atguigu.common.utils.R;
 import com.atguigu.common.vo.MemberRespVo;
 import com.atguigu.gulimall.order.constant.OrderConstant;
@@ -27,6 +28,8 @@ import com.atguigu.gulimall.order.to.OrderCreateTo;
 import com.atguigu.gulimall.order.vo.*;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -61,6 +64,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     ProductFeignService productFeignService;
     @Autowired
     StringRedisTemplate redisTemplate;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
     @Autowired
     ThreadPoolExecutor executor;
 
@@ -127,7 +132,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         return confirmVo;
     }
 
-    @GlobalTransactional//seata的全局事务
+//    @GlobalTransactional//seata的全局事务(高并发性能低，使用rabbitmq解决，不用这个）
     @Transactional//本地事务，只能控制自己的回滚，控制不了其他服务的回滚
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
@@ -178,19 +183,44 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 if(r.getCode() == 0){//锁定成功
                     responseVo.setOrder(order.getOrder());
 //                    int i = 10 /0;//模拟异常，测试seata分布式事务，如果库存服务正常回滚，表明测试seata分布式事务成功起作用
+//                    int i = 10 /0;//模拟异常，测试rebbitmq延时队列，如果延时队列起作用，表明测试成功
+                    // 订单创建成功，给rabbitmq发送消息
+                    rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order",order.getOrder());
                     return responseVo;
                 } else {
                     responseVo.setCode(3);//锁定库存失败
-                    try {
-                        throw new NoStockException(null);//由于事务需要发生异常才能回滚，没有这句时会下单失败，但给数据库添加了数据
-                    } finally {
-                        return responseVo;
-                    }
+                    Integer code = r.getCode();
+                    throw new NoStockException(code.longValue());//由于事务需要发生异常才能回滚，没有这句时会下单失败，但给数据库添加了数据
                 }
             } else {
                 responseVo.setCode(2);//金额对比失败
-                return responseVo;
+                throw new RuntimeException();//同样是为了回滚事务
+//                return responseVo;
             }
+        }
+    }
+
+    @Override
+    public OrderEntity getOrderByOrderSn(String orderSn) {
+        OrderEntity order_sn = this.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
+        return order_sn;
+    }
+
+    @Override
+    public void closeOrder(OrderEntity entity) {
+        // 查询当前订单的最新状态，是否已经支付等
+        OrderEntity byId = this.getById(entity.getId());
+        if(byId.getStatus() == OrderStatusEnum.CREATE_NEW.getCode()){//待支付的订单
+            // 关闭订单
+            OrderEntity order = new OrderEntity();//创建一个新的订单对象，去更新byid对象，避免正在更新状态时，其他服务对byid进行了修改，然后这里又改了回去
+            order.setId(entity.getId());
+            order.setStatus(OrderStatusEnum.CANCLED.getCode());//取消订单
+            this.updateById(order);
+
+            // 给库存mq的队列发送一个消息
+            OrderEntityTo orderEntityTo = new OrderEntityTo();
+            BeanUtils.copyProperties(byId, orderEntityTo);
+            rabbitTemplate.convertAndSend("order-event-exchange","order.release.other",orderEntityTo);
         }
     }
 

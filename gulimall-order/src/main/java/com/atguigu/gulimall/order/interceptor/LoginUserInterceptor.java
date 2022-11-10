@@ -3,6 +3,7 @@ package com.atguigu.gulimall.order.interceptor;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.vo.MemberRespVo;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 拦截请求
+ * 拦截请求（登录状态检查）
  * @author zhuyuqi
  * @version v0.0.1
  * @className LoginUserInterceptor
@@ -21,8 +22,16 @@ import javax.servlet.http.HttpSession;
 public class LoginUserInterceptor implements HandlerInterceptor {
     public static ThreadLocal<MemberRespVo> loginUser = new ThreadLocal<>();
 
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        String uri = request.getRequestURI();
+        boolean match = new AntPathMatcher().match("/order/order/status/**", uri);//判断是不是ware服务远程调用过来的（这个不用登陆检查）
+        if(match){//匹配成功，直接放行
+            return true;
+        }
+
         HttpSession session = request.getSession();
         Object attribute = session.getAttribute(AuthServerConstant.LOGIN_USER);
         if(attribute != null){//查到了用户，说明已登录
