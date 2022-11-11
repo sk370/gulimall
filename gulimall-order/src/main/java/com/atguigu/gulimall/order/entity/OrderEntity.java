@@ -3,7 +3,9 @@ package com.atguigu.gulimall.order.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -190,5 +192,8 @@ public class OrderEntity implements Serializable {
 	 * 修改时间
 	 */
 	private Date modifyTime;
+
+	@TableField(exist = false)//非数据库字段
+	private List<OrderItemEntity> itemEntities;//用于前端页面返回
 
 }

@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.order.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -9,23 +10,30 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.TypeReference;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.atguigu.common.exception.NoStockException;
 import com.atguigu.common.to.SkuHasStockVo;
 import com.atguigu.common.to.mq.OrderEntityTo;
 import com.atguigu.common.utils.R;
 import com.atguigu.common.vo.MemberRespVo;
+import com.atguigu.gulimall.order.config.AlipayTemplate;
 import com.atguigu.gulimall.order.constant.OrderConstant;
 import com.atguigu.gulimall.order.constant.OrderStatusEnum;
 import com.atguigu.gulimall.order.dao.OrderItemDao;
 import com.atguigu.gulimall.order.entity.OrderItemEntity;
+import com.atguigu.gulimall.order.entity.PaymentInfoEntity;
 import com.atguigu.gulimall.order.feign.CartFeignService;
 import com.atguigu.gulimall.order.feign.MemberFeignService;
 import com.atguigu.gulimall.order.feign.ProductFeignService;
 import com.atguigu.gulimall.order.feign.WmsFeignService;
 import com.atguigu.gulimall.order.interceptor.LoginUserInterceptor;
 import com.atguigu.gulimall.order.service.OrderItemService;
+import com.atguigu.gulimall.order.service.PaymentInfoService;
 import com.atguigu.gulimall.order.to.OrderCreateTo;
 import com.atguigu.gulimall.order.vo.*;
+import com.atguigu.gulimall.order.vo.pay.PayAsyncVo;
+import com.atguigu.gulimall.order.vo.pay.PayVo;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -48,6 +56,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
@@ -62,6 +72,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     WmsFeignService wmsFeignService;
     @Autowired
     ProductFeignService productFeignService;
+    @Autowired
+    PaymentInfoService paymentInfoService;
     @Autowired
     StringRedisTemplate redisTemplate;
     @Autowired
@@ -220,8 +232,67 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             // 给库存mq的队列发送一个消息
             OrderEntityTo orderEntityTo = new OrderEntityTo();
             BeanUtils.copyProperties(byId, orderEntityTo);
-            rabbitTemplate.convertAndSend("order-event-exchange","order.release.other",orderEntityTo);
+            try {// 保证消息一定能发送出去
+                rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderEntityTo);
+            }catch (Exception e){
+                // 没发送出去的消息进行循环重试、
+            }
         }
+    }
+
+    @Override
+    public PayVo getOrderPay(String orderSn) {
+        PayVo payVo = new PayVo();
+        OrderEntity order = this.getOrderByOrderSn(orderSn);
+        List<OrderItemEntity> order_sn = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", orderSn));
+
+        payVo.setBody(order.getNote());//订单的备注
+        payVo.setOut_trade_no(order.getOrderSn());//订单号
+        BigDecimal bigDecimal = order.getPayAmount().setScale(2, BigDecimal.ROUND_UP);//格式化bigdecimal
+        payVo.setTotal_amount(bigDecimal.toString());//订单金额
+
+        payVo.setSubject(order_sn.get(0).getSkuName());//订单主题
+
+        return payVo;
+    }
+
+    @Override
+    public PageUtils queryPageWithItem(Map<String, Object> params) {
+        MemberRespVo memberRespVo = LoginUserInterceptor.loginUser.get();
+        IPage<OrderEntity> page = this.page(
+                new Query<OrderEntity>().getPage(params),
+                new QueryWrapper<OrderEntity>().eq("member_id",memberRespVo.getId()).orderByDesc("id")
+        );
+        //查询每个订单的订单项
+        List<OrderEntity> collect = page.getRecords().stream().map(order -> {
+            List<OrderItemEntity> order_sn = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", order.getOrderSn()));
+            order.setItemEntities(order_sn);
+            return order;
+        }).collect(Collectors.toList());
+        page.setRecords(collect);//重新设置分页信息
+        return new PageUtils(page);
+    }
+
+    @Override
+    public String handlePayResult(PayAsyncVo vo, HttpServletRequest request){
+        // 1. 保存交易流水
+        PaymentInfoEntity infoEntity = new PaymentInfoEntity();
+        infoEntity.setAlipayTradeNo(vo.getTrade_no());
+        infoEntity.setOrderSn(vo.getOut_trade_no());
+        infoEntity.setPaymentStatus(vo.getTrade_status());
+        infoEntity.setCallbackTime(vo.getNotify_time());
+        infoEntity.setCreateTime(new Date());
+//        infoEntity.setOrderId(vo.get);//需要查询ordersn获取
+        infoEntity.setTotalAmount(new BigDecimal(vo.getBuyer_pay_amount()));
+
+        paymentInfoService.save(infoEntity);
+
+        // 2. 修改订单的状态信息
+        if(Objects.equals(vo.getTrade_status(), "TRADE_SUCCESS") || Objects.equals(vo.getTrade_status(), "TRADE_FINISHED")){
+            String orderSn = vo.getOut_trade_no();
+            this.baseMapper.updateOrderStatus(orderSn, OrderStatusEnum.PAYED.getCode());
+        }
+        return "success";
     }
 
     /**

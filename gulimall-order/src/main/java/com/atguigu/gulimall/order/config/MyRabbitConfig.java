@@ -53,6 +53,7 @@ public class MyRabbitConfig {
              */
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+                // TODO 服务器borker收到消息，将消息写入数据库`mq_message`
             }
         });
 
@@ -67,6 +68,7 @@ public class MyRabbitConfig {
              */
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+                // TODO 消息没有抵达队列，修改数据库中当前消息的错误状态`mq_message`
             }
         });
     }

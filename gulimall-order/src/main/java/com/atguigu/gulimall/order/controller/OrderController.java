@@ -38,11 +38,12 @@ public class OrderController {
     }
 
     /**
-     * 列表
+     * 已支付订单详情页列表
      */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = orderService.queryPage(params);
+//    @GetMapping("/listWithItem")
+    @PostMapping("/listWithItem")//为了转换参数，使用了RequestBody，所以只能使用PostMapping
+    public R listWithItem(@RequestBody Map<String, Object> params){
+        PageUtils page = orderService.queryPageWithItem(params);
 
         return R.ok().put("page", page);
     }

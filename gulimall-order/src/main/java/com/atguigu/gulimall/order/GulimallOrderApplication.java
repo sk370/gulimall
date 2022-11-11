@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableRabbit//开启rabbitmq功能
 @EnableFeignClients
 @EnableAspectJAutoProxy(exposeProxy=true)//主启动类开启aspectj动态代理（不使用aspectj则为默认的jdk代理，需要接口才能代理）
-@EnableTransactionManagement(proxyTargetClass = true)//主启动类开启代理对象事务控制（老师的没这句）
+//@EnableTransactionManagement(proxyTargetClass = true)//主启动类开启代理对象事务控制（老师的没这句），mybatisconfig写了
 public class GulimallOrderApplication {
 
     public static void main(String[] args) {

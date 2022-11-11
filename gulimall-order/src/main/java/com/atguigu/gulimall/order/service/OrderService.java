@@ -1,14 +1,20 @@
 package com.atguigu.gulimall.order.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import com.alipay.api.AlipayApiException;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.vo.OrderConfirmVo;
 import com.atguigu.gulimall.order.vo.OrderSubmitVo;
 import com.atguigu.gulimall.order.vo.SubmitOrderResponseVo;
+import com.atguigu.gulimall.order.vo.pay.PayAsyncVo;
+import com.atguigu.gulimall.order.vo.pay.PayVo;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 订单
@@ -46,5 +52,27 @@ public interface OrderService extends IService<OrderEntity> {
      * @param entity
      */
     void closeOrder(OrderEntity entity);
+
+    /**
+     * 自定义方法：获取当前订单的支付信息
+     * @param orderSn
+     * @return
+     */
+    PayVo getOrderPay(String orderSn);
+
+    /**
+     * 自定义方法：订单详情页
+     * @param params
+     * @return
+     */
+    PageUtils queryPageWithItem(Map<String, Object> params);
+
+    /**
+     * 自定义方法
+     * @param vo
+     * @param request
+     * @return
+     */
+    String handlePayResult(PayAsyncVo vo,HttpServletRequest request);
 }
 
