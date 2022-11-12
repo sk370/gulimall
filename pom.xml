@@ -22,5 +22,6 @@
         <module>gulimall-authserver</module>
         <module>renren-fast</module>
         <module>renren-generator</module>
+        <module>gulimall-secondkill</module>
     </modules>
 </project>

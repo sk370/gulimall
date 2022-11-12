@@ -40,6 +40,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: coupon_route
+          uri: lb://gulimall-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
         - id: admin_route
           uri: lb://renren-fast
           predicates:
@@ -78,5 +85,10 @@ spring:
           uri: lb://gulimall-member
           predicates:
             - Host=member.gulimall.com,member.gulimall.sk370.top
+
+        - id: gulimall_secondkill_route
+          uri: lb://gulimall-secondkill
+          predicates:
+            - Host=seckill.gulimall.com
 
           # 前端项目的请求路径都带/api

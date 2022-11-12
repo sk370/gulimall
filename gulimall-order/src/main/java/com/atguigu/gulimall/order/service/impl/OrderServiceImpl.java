@@ -13,6 +13,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.atguigu.common.exception.NoStockException;
+import com.atguigu.common.to.SecKillOrderTo;
 import com.atguigu.common.to.SkuHasStockVo;
 import com.atguigu.common.to.mq.OrderEntityTo;
 import com.atguigu.common.utils.R;
@@ -36,6 +37,7 @@ import com.atguigu.gulimall.order.vo.pay.PayAsyncVo;
 import com.atguigu.gulimall.order.vo.pay.PayVo;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -235,7 +237,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             try {// 保证消息一定能发送出去
                 rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderEntityTo);
             }catch (Exception e){
-                // 没发送出去的消息进行循环重试、
+                // TODO 没发送出去的消息进行循环重试、
             }
         }
     }
@@ -291,8 +293,46 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         if(Objects.equals(vo.getTrade_status(), "TRADE_SUCCESS") || Objects.equals(vo.getTrade_status(), "TRADE_FINISHED")){
             String orderSn = vo.getOut_trade_no();
             this.baseMapper.updateOrderStatus(orderSn, OrderStatusEnum.PAYED.getCode());
+            // TODO 怎么主动延时队列中的订单消息和库存锁定消息？不主动处理等着自动过期处理吗？
         }
         return "success";
+    }
+
+//    @Transactional
+    @Override
+    public void createSecKillOrder(SecKillOrderTo secKillOrder) {
+        String orderSn = secKillOrder.getOrderSn();
+        OrderEntity order_sn = this.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
+//        if(order_sn == null) {
+            // 1. TODO 保存订单信息
+            OrderEntity orderEntity = new OrderEntity();
+            BigDecimal multiply = secKillOrder.getSeckillPrice().multiply(new BigDecimal(secKillOrder.getNum() + ""));
+            orderEntity.setPayAmount(multiply);
+            orderEntity.setOrderSn(secKillOrder.getOrderSn());
+            orderEntity.setMemberId(secKillOrder.getMemberId());
+//        orderEntity.setReceiverRegion();
+            orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+            orderEntity.setCreateTime(new Date());
+            orderEntity.setModifyTime(new Date());
+            this.save(orderEntity);
+
+            // 2. TODO 保存订单项信息
+            OrderItemEntity entity = new OrderItemEntity();
+            entity.setOrderSn(secKillOrder.getOrderSn());
+            entity.setSkuId(secKillOrder.getSkuId());
+            entity.setRealAmount(multiply);
+            entity.setSkuQuantity(secKillOrder.getNum());
+//            R r = productFeignService.getSpuInfoBySkuId(secKillOrder.getSkuId());//调用太慢导致消息消费不了，可以写一个方法，将返回值放在springcache中
+//            SpuInfoVo data = r.getData(new TypeReference<SpuInfoVo>() {
+//            });
+//            entity.setSpuId(data.getId());
+//            entity.setSpuBrand(data.getBrandId().toString());
+//            entity.setSpuName(data.getSpuName());
+//            entity.setCategoryId(data.getCatalogId());
+            orderItemService.save(entity);
+
+            // 3. TODO 锁定库存信息【也要给库存延时队列消息】
+//        }
     }
 
     /**

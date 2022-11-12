@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 指定rabbitmq数据序列化机制，以及定制RabbitTemplate
@@ -83,7 +84,7 @@ public class MyRabbitConfig {
         //设置死信队列参数
         arguments.put("x-dead-letter-exchange","order-event-exchange");
         arguments.put("x-dead-letter-routing-key","order.release.order");
-        arguments.put("x-message-ttl",60000);//设置了1分钟过期，真实业务可设置为30分钟
+        arguments.put("x-message-ttl",30 * 60 * 1000);//设置了1分钟过期，真实业务可设置为30分钟
         return new Queue("order.delay.queue", true, false, false,arguments);
     }
 
@@ -130,5 +131,24 @@ public class MyRabbitConfig {
     @Bean
     public Binding orderReleaseOtherBinding(){
         return new Binding("stock.release.stock.queue", Binding.DestinationType.QUEUE,"order-event-exchange","order.release.other.#",null);
+    }
+
+
+    /**
+     * 秒杀订单队列
+     * @return
+     */
+    @Bean
+    public Queue orderSecKillOrderQueue(){
+        return new Queue("order.seckill.order.queue", true, false,false);
+    }
+
+    /**
+     * 秒杀订单队列与交换机绑定
+     * @return
+     */
+    @Bean
+    public Binding orderSecKillOrderQueueBinding(){
+        return new Binding("order.seckill.order.queue", Binding.DestinationType.QUEUE,"order-event-exchange","order.seckill.order",null);
     }
 }

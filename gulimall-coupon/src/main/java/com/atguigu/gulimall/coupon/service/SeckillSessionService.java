@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.coupon.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.atguigu.common.utils.PageUtils;
@@ -16,5 +17,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface SeckillSessionService extends IService<SeckillSessionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 自定义方法
+     * @return
+     */
+    List<SeckillSessionEntity> getLatest3DaysSession();
 }
 

@@ -284,7 +284,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }else{
             // TODO 重复调用问题（接口幂等性）重试机制
             log.error("商品上架有失败的~~spuinfoserviceimpl");
-
         }
     }
 

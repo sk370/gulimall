@@ -1,6 +1,8 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,17 @@ import com.atguigu.gulimall.coupon.service.SeckillSessionService;
 public class SeckillSessionController {
     @Autowired
     private SeckillSessionService seckillSessionService;
+
+    /**
+     * 查找最近三天要上架的商品
+     * @return
+     */
+    @GetMapping("/latest3DaysSession")
+    public R getLatest3DaysSession(){
+        List<SeckillSessionEntity> sessions = seckillSessionService.getLatest3DaysSession();
+        return R.ok().setData(sessions);
+    }
+
 
     /**
      * 列表

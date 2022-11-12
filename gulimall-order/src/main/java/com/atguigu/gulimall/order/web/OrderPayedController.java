@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.order.listener;
+package com.atguigu.gulimall.order.web;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -21,12 +21,12 @@ import com.atguigu.gulimall.order.vo.pay.PayAsyncVo;
  * 监听支付宝支付成功的异步回调
  * @author zhuyuqi
  * @version v0.0.1
- * @className OrderPayedListener
+ * @className OrderPayedController
  * @description https://developer.aliyun.com/profile/sagwrxp2ua66w
  * @date 2022/11/10 23:29
  */
 @RestController//需要给支付宝服务器发送数据
-public class OrderPayedListener {
+public class OrderPayedController {
     @Autowired
     OrderService orderService;
     @Autowired

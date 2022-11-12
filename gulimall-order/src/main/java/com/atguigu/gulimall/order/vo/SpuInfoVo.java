@@ -14,6 +14,9 @@ import java.util.Date;
  */
 @Data
 public class SpuInfoVo {
+    /**
+     * 商品id
+     */
     private Long id;
     /**
      * 商品名称

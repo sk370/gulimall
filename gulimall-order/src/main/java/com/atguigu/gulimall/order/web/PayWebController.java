@@ -34,7 +34,7 @@ public class PayWebController {
     @GetMapping(value = "/payOrder",produces = "text/html")
     public String payOrder(@RequestParam("orderSn") String orderSn) throws AlipayApiException {
         PayVo payVo = orderService.getOrderPay(orderSn);
-        String pay = alipayTemplate.pay(payVo);//返回的pay时一段html，可以作为脚本自动运行，最终返回支付宝的支付界面
+        String pay = alipayTemplate.pay(payVo);//返回的pay时一段html，javascript脚本自动运行，最终返回支付宝的支付界面
         System.out.println(pay);
         return pay;
     }

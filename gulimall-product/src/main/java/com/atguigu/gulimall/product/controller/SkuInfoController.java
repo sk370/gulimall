@@ -52,7 +52,7 @@ public class SkuInfoController {
 
 
     /**
-     * 信息
+     * sku详情信息
      */
     @RequestMapping("/info/{skuId}")
     public R info(@PathVariable("skuId") Long skuId){

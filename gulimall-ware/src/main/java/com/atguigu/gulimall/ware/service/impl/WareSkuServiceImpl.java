@@ -157,7 +157,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                     StockDetailTo stockDetailTo = new StockDetailTo();
                     BeanUtils.copyProperties(detailEntity,stockDetailTo);
                     lockedTo.setDetailTo(stockDetailTo);
-                    rabbitTemplate.convertAndSend("stock-event-exchange","stock.locked",lockedTo);
+                    rabbitTemplate.convertAndSend("stock-event-exchange","stock.locked",lockedTo);//库存锁定消息写入rabbit，先进入交换机，立马路由至延时队列
 
                     break;//
                 }else{//当前仓库锁定失败，重试下一个仓库

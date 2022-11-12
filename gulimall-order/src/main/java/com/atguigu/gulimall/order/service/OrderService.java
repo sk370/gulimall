@@ -1,10 +1,9 @@
 package com.atguigu.gulimall.order.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import com.alipay.api.AlipayApiException;
+import com.atguigu.common.to.SecKillOrderTo;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.vo.OrderConfirmVo;
@@ -74,5 +73,11 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     String handlePayResult(PayAsyncVo vo,HttpServletRequest request);
+
+    /**
+     * 自定义方法
+     * @param secKillOrder
+     */
+    void createSecKillOrder(SecKillOrderTo secKillOrder);
 }
 

@@ -82,7 +82,7 @@ public class MyRabbitConfig {
         //设置死信队列参数
         arguments.put("x-dead-letter-exchange","stock-event-exchange");
         arguments.put("x-dead-letter-routing-key","stock.release");
-        arguments.put("x-message-ttl",120000);//设置了2分钟过期，真实业务可设置为40分钟
+        arguments.put("x-message-ttl",40 * 60 * 1000);//设置了2分钟过期，真实业务可设置为40分钟
         return new Queue("stock.delay.queue", true, false, false,arguments);
     }
 

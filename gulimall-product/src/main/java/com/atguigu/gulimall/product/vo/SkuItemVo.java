@@ -52,5 +52,5 @@ public class SkuItemVo {
      */
     List<SpuItemAttrGroupVo> groupAttrs;
 
-
+    SecKillSkuRedisVo seckillInfo;//当前商品的秒杀优惠信息
 }

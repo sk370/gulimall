@@ -7,6 +7,7 @@ spring:
       oss:
         endpoint: oss-cn-chengdu.aliyuncs.com
         bucket: gulimall-brands-logo
+# 下面的这些配置在nacos中
 #  datasource:
 #    username: root
 #    password: root

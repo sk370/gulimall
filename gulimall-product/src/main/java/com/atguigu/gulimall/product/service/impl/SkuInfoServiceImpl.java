@@ -7,6 +7,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import com.alibaba.fastjson.TypeReference;
+import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.product.feign.SecKillFeignService;
+import com.atguigu.gulimall.product.vo.SecKillSkuRedisVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -38,6 +42,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     SkuSaleAttrValueService skuSaleAttrValueService;
     @Autowired
     ThreadPoolExecutor threadPoolExecutor;
+    @Autowired
+    SecKillFeignService secKillFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -156,8 +162,18 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuItemVo.setGroupAttrs(groupAttrs);
         }, threadPoolExecutor);
 
-        // 6. 等待所有任务都完成【异步编排——结果合并】
-        CompletableFuture.allOf(imagesFuture, saleAttrFuture, despFuture, baseAttrFuture).get();
+        // 6. 远程查询当前商品是否参与秒杀，进行秒杀预告（也可以采用直接查询redis的方式）
+        CompletableFuture<Void> secKillFuture = CompletableFuture.runAsync(() -> {
+            R skuSecKillInfo = secKillFeignService.getSkuSecKillInfo(skuId);
+            if (skuSecKillInfo.getCode() == 0) {
+                SecKillSkuRedisVo data = skuSecKillInfo.getData(new TypeReference<SecKillSkuRedisVo>() {
+                });
+                skuItemVo.setSeckillInfo(data);
+            }
+        }, threadPoolExecutor);
+
+        // 7. 等待所有任务都完成【异步编排——结果合并】
+        CompletableFuture.allOf(imagesFuture, saleAttrFuture, despFuture, baseAttrFuture,secKillFuture).get();
 
         return skuItemVo;
     }
