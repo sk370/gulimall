@@ -26,8 +26,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 //@EnableRabbit//开启rabbitmq功能(监听消息rabbitmqlistener才需要，只是放消息可以不加)
 public class MyRabbitConfig {
-    @Autowired
-    RabbitTemplate rabbitTemplate;
+//    @Autowired
+//    RabbitTemplate rabbitTemplate;
 
     /**
      * 指定序列化规则

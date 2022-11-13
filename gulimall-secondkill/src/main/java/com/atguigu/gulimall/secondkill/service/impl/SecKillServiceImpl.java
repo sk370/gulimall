@@ -63,6 +63,7 @@ public class SecKillServiceImpl implements SecKillService {
             // 1.1 得到商品项目
             List<SecKillSessionsWithSkusVo> sessionData = latest3DaysSession.getData(new TypeReference<List<SecKillSessionsWithSkusVo>>() {
             });
+            if(sessionData == null) return;
             // 2. 上架商品（存入redis）
             // 2.1 缓存活动信息
             this.saveSessionInofs(sessionData);
